@@ -76,25 +76,27 @@ window.addEventListener("load", function(){
     };
     const ParticleSystem = GL.ParticleSystem('update', 'render', opts);
     GL.initGeometryUniforms('update', [ 'u_ModelMatrix' ]);
-    GL.initGeometryUniforms('render', [ 'u_ModelMatrix' ]);
 
     GL.addProgramUniform('update', {
-        name: 'u_Mouse2',
-        type: 'uniform2fv',
-        value: mouse2,
+        name: 'u_NumUsers',
+        type: 'uniform1i',
+        value: 0,
     });
-
-    // GL.addProgramUniform('update', {
-        // name: 'u_ViewMatrix2',
-        // type: 'uniformMatrix4fv',
-        // value: mat4.create(),
-    // });
 
     GL.addProgramUniform('update', {
         name: 'u_Intersect',
         type: 'uniform3fv',
         value: new Float32Array([0, 0, 0]),
     });
+
+    GL.addUniformBuffer('update', {
+        name : 'u_UserIntersects',
+        binding: 1,
+        // drawType: 'DYNAMIC_DRAW',
+        data : new Float32Array([0, 0, 0, 0])
+    });
+
+    GL.updateUniformBuffer('update', 'u_UserIntersects', [0, 0, 0, 0]);
 
     const theta = Math.random()*Math.PI*2;
     const phi   = Math.random()*Math.PI*2;
@@ -108,7 +110,6 @@ window.addEventListener("load", function(){
     let click = false;
     const currentViewMatrix = GL.getViewMatrix('update');
     const currentProjMatrix = GL.getProjectionMatrix('update');
-    socket.emit('data', { viewMatrix : currentViewMatrix });
 
     GL.canvas.addEventListener('mousedown', e => {
         click = true;
@@ -116,42 +117,29 @@ window.addEventListener("load", function(){
 
     GL.canvas.addEventListener('mousemove', e => {
         if(click){
-            const x = e.clientX;
-            const y = e.clientY;
+            const x = 2.0 * e.clientX/GL.width - 1.0;
+            const y = -(2.0 * e.clientY/GL.height - 1.0);
 
-            const tx = 2.0 * x/GL.width - 1.0;
-            const ty = -(2.0 * y/GL.height - 1.0);
-
-            // console.log(mouseRay([tx,ty],currentViewMatrix, currentProjMatrix));
-            let intersect = mouseRay([tx,ty], currentViewMatrix, currentProjMatrix);
             socket.emit('mouseMove', { 
-                mousePos : [ x, y ],
-                intersect : intersect
+                intersect : mouseRay([x,y], currentViewMatrix, currentProjMatrix)
             });
-
         }
     });
 
     GL.canvas.addEventListener('mouseup', e => {
         click = false;
         socket.emit('data', { 
-            mousePos : [ 0, 0 ],
+            intersect : [ 0, 0, 0 ],
         });
     });
 
     socket.on('data', users => {
+        GL.updateProgramUniform('update', 'u_NumUsers', Object.keys(users).length-1);
         for(const ID in users){
             if(users.hasOwnProperty(ID) && ID !== socket.id){
                 const user = users[ID];
-                if(user.mousePos){
-                    mouse2[0] = 2.0 * (user.mousePos[0])/GL.width - 1.0;
-                    mouse2[1] = -(2.0 * (user.mousePos[1])/GL.height - 1.0);
-                } else {
-                    mouse2 = [0,0];
-                }
-                GL.updateProgramUniform('update', 'u_Mouse2', mouse2);
-                // GL.updateProgramUniform('update', 'u_ViewMatrix2', mat4.create());
-                if(user.intersect) GL.updateProgramUniform('update', 'u_Intersect', new Float32Array(user.intersect));
+                if(user.intersect === -1 || user.intersect === null) GL.updateProgramUniform('update', 'u_Intersect', new Float32Array([0,0,0])); 
+                else GL.updateProgramUniform('update', 'u_Intersect', new Float32Array(user.intersect));
             }
         }
     });
@@ -165,11 +153,11 @@ window.addEventListener("load", function(){
 
 
 function mouseRay(_mousePos, _viewMat, _projMat){
-    // -- Mouse Click to Ray Projection:
+    // -- MOUSE CLICK TO RAY PROJECTION: -----------------------
     const rayStart = vec4.fromValues(_mousePos[0], _mousePos[1], -1.0, 1.0);
     const rayEnd   = vec4.fromValues(_mousePos[0], _mousePos[1],  0.0, 1.0);
 
-    const inverseMat = mat4.create();// inverse(u_ProjectionMatrix * _viewMat);
+    const inverseMat = mat4.create();
     mat4.mul(inverseMat, _projMat, _viewMat);
     mat4.invert(inverseMat, inverseMat);
 
@@ -180,9 +168,8 @@ function mouseRay(_mousePos, _viewMat, _projMat){
 
     const rayDir_world = vec4.create();
     vec4.subtract(rayDir_world, rayEnd_world, rayStart_world);
-    // vec4.normalize(rayDir_world, rayDir_world);
 
-    // Ray Intersection with Unit Sphere:
+    // -- RAY INTERSECTION WITH UNIT SPHERE: -------------------
     const rayOrigin = vec3.fromValues(rayStart_world[0], rayStart_world[1], rayStart_world[2]);
     const rayDirection = vec3.fromValues(rayDir_world[0], rayDir_world[1], rayDir_world[2]);
     vec3.normalize(rayDirection, rayDirection);
@@ -204,6 +191,8 @@ function mouseRay(_mousePos, _viewMat, _projMat){
     const intersect = vec3.create();
 
     vec3.scaleAndAdd(intersect, rayOrigin, rayDirection, distToIntersect);
+    // Spread to convert from Float32Array to normal array
+    // because socket.io struggles with F32 arrays.
     return [...intersect];
 }
 

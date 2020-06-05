@@ -17,8 +17,6 @@ io.on('connection', (socket) => {
     socket.emit('data', users);
 
     users[socket.id] = {
-        mousePos : null,
-        viewMatrix : null,
         intersect : null,
     };
 
@@ -28,9 +26,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('mouseMove', (data) => {
-        users[socket.id].mousePos = data.mousePos;
         users[socket.id].intersect = data.intersect;
-        console.log(users);
         socket.broadcast.emit("data", users);
     });
 

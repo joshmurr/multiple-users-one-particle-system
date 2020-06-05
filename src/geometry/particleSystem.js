@@ -175,12 +175,14 @@ export default class ParticleSystem extends Geometry {
                 Math.floor(this._bornParticles + this._options.birthRate * _dT));
         }
 
+        // _gl.bindBufferBase(_gl.UNIFORM_BUFFER_BINDING, 0, null);
         _gl.bindVertexArray(this._VAOs[this._read]);
 
         /* Bind the "write" buffer as transform feedback - the varyings of the
          *      update shader will be written here. */
         _gl.bindBufferBase(
             _gl.TRANSFORM_FEEDBACK_BUFFER, 0, this._buffers[this._write]);
+        // console.log(this.gl.getParameter(this.gl.UNIFORM_BUFFER_BINDING));
 
         /* Since we're not actually rendering anything when updating the particle
          *      this, disable rasterization.*/
@@ -193,5 +195,6 @@ export default class ParticleSystem extends Geometry {
         _gl.disable(_gl.RASTERIZER_DISCARD);
         /* Don't forget to unbind the transform feedback buffer! */
         _gl.bindBufferBase(_gl.TRANSFORM_FEEDBACK_BUFFER, 0, null);
+        // _gl.bindBufferBase(_gl.UNIFORM_BUFFER, 1, null);
     }
 }

@@ -5,6 +5,10 @@
 precision mediump float;
 precision mediump sampler3D;
 
+uniform u_UserIntersects {
+    vec4 XXXintersect;
+};
+
 uniform float u_TimeDelta;
 uniform float u_TotalTime;
 uniform vec2 u_Mouse;
@@ -15,9 +19,11 @@ uniform mat4 u_ViewMatrix;
 uniform mat4 u_ProjectionMatrix;
 
 // -- OTHER USER -- //
-uniform vec2 u_Mouse2;
+// uniform vec2 u_Mouse2;
+uniform int u_NumUsers;
 // uniform mat4 u_ViewMatrix2;
 uniform vec3 u_Intersect;
+
 
 vec3 u_Gravity = vec3(0.0, 0.0, 0.0);
 vec3 u_Origin = vec3(0.0, 0.0, 0.0);
@@ -218,12 +224,16 @@ void main(){
         v_Position = 1.0 * (2.0 * texelFetch(u_InitialPosition, ivec2(gl_VertexID, 0), 0).rgb - vec3(1.0));
         v_Age = 0.0;
         v_Life = i_Life;
-        v_Velocity = vec3(0);
+        v_Velocity = XXXintersect.xyz;
     } else {
         // if(u_Mouse2.x != 0.0 && u_ViewMatrix2[3][3] == 1.0) {
             // acc += mouseRay(u_Mouse2, u_ViewMatrix2);
         // }
-        if(u_Mouse2.x != 0.0) acc += repel(i_Position, u_Intersect);
+        if(u_NumUsers > 0) {
+            for(int i=0; i<u_NumUsers; i++){
+                acc += repel(i_Position, u_Intersect);
+            }
+        }
         // if(u_Click > 0) acc += mouseRay(u_Mouse, u_ViewMatrix);
 
         v_Position = rotateY(i_Position) + i_Velocity * u_TimeDelta;
