@@ -1,5 +1,5 @@
 import GL_BP from './GL_BP';
-import { mat4 } from 'gl-matrix';
+import { mat4, vec4, vec3 } from 'gl-matrix';
 import socketIOClient from 'socket.io-client';
 let socket = socketIOClient('ws://localhost:8989');
 
@@ -84,10 +84,16 @@ window.addEventListener("load", function(){
         value: mouse2,
     });
 
+    // GL.addProgramUniform('update', {
+        // name: 'u_ViewMatrix2',
+        // type: 'uniformMatrix4fv',
+        // value: mat4.create(),
+    // });
+
     GL.addProgramUniform('update', {
-        name: 'u_ViewMatrix2',
-        type: 'uniformMatrix4fv',
-        value: mat4.create(),
+        name: 'u_Intersect',
+        type: 'uniform3fv',
+        value: new Float32Array([0, 0, 0]),
     });
 
     const theta = Math.random()*Math.PI*2;
@@ -101,6 +107,7 @@ window.addEventListener("load", function(){
     // -- SOCKETS ------------------- //
     let click = false;
     const currentViewMatrix = GL.getViewMatrix('update');
+    const currentProjMatrix = GL.getProjectionMatrix('update');
     socket.emit('data', { viewMatrix : currentViewMatrix });
 
     GL.canvas.addEventListener('mousedown', e => {
@@ -112,9 +119,16 @@ window.addEventListener("load", function(){
             const x = e.clientX;
             const y = e.clientY;
 
+            const tx = 2.0 * x/GL.width - 1.0;
+            const ty = -(2.0 * y/GL.height - 1.0);
+
+            // console.log(mouseRay([tx,ty],currentViewMatrix, currentProjMatrix));
+            let intersect = mouseRay([tx,ty], currentViewMatrix, currentProjMatrix);
             socket.emit('mouseMove', { 
                 mousePos : [ x, y ],
+                intersect : intersect
             });
+
         }
     });
 
@@ -129,7 +143,6 @@ window.addEventListener("load", function(){
         for(const ID in users){
             if(users.hasOwnProperty(ID) && ID !== socket.id){
                 const user = users[ID];
-                console.log(user);
                 if(user.mousePos){
                     mouse2[0] = 2.0 * (user.mousePos[0])/GL.width - 1.0;
                     mouse2[1] = -(2.0 * (user.mousePos[1])/GL.height - 1.0);
@@ -137,7 +150,8 @@ window.addEventListener("load", function(){
                     mouse2 = [0,0];
                 }
                 GL.updateProgramUniform('update', 'u_Mouse2', mouse2);
-                GL.updateProgramUniform('update', 'u_ViewMatrix2', user.viewMatrix || mat4.create());
+                // GL.updateProgramUniform('update', 'u_ViewMatrix2', mat4.create());
+                if(user.intersect) GL.updateProgramUniform('update', 'u_Intersect', new Float32Array(user.intersect));
             }
         }
     });
@@ -150,3 +164,54 @@ window.addEventListener("load", function(){
 });
 
 
+function mouseRay(_mousePos, _viewMat, _projMat){
+    // -- Mouse Click to Ray Projection:
+    const rayStart = vec4.fromValues(_mousePos[0], _mousePos[1], -1.0, 1.0);
+    const rayEnd   = vec4.fromValues(_mousePos[0], _mousePos[1],  0.0, 1.0);
+
+    const inverseMat = mat4.create();// inverse(u_ProjectionMatrix * _viewMat);
+    mat4.mul(inverseMat, _projMat, _viewMat);
+    mat4.invert(inverseMat, inverseMat);
+
+    const rayStart_world = getMultiplyVec(inverseMat, rayStart);
+    vec4.scale(rayStart_world, rayStart_world, 1/rayStart_world[3]);
+    const rayEnd_world =  getMultiplyVec(inverseMat, rayEnd);
+    vec4.scale(rayEnd_world, rayEnd_world, 1/rayEnd_world[3]);
+
+    const rayDir_world = vec4.create();
+    vec4.subtract(rayDir_world, rayEnd_world, rayStart_world);
+    // vec4.normalize(rayDir_world, rayDir_world);
+
+    // Ray Intersection with Unit Sphere:
+    const rayOrigin = vec3.fromValues(rayStart_world[0], rayStart_world[1], rayStart_world[2]);
+    const rayDirection = vec3.fromValues(rayDir_world[0], rayDir_world[1], rayDir_world[2]);
+    vec3.normalize(rayDirection, rayDirection);
+
+    let a, b, c; // Floats
+    let rayOrigin_sub_sphereOrigin = vec3.create();
+    const sphereRadius = 0.5;
+
+    a = vec3.dot(rayDirection, rayDirection);
+    vec3.subtract(rayOrigin_sub_sphereOrigin, rayOrigin, vec3.fromValues(0,0,0));
+    b = 2.0 * vec3.dot(rayDirection, rayOrigin_sub_sphereOrigin);
+    c = vec3.dot(rayOrigin_sub_sphereOrigin, rayOrigin_sub_sphereOrigin);
+    c -= (sphereRadius * sphereRadius);
+    if (b*b - 4.0*a*c < 0.0) {
+        return -1.0;
+    }
+
+    const distToIntersect = (-b - Math.sqrt((b*b) - 4.0*a*c))/(2.0*a);
+    const intersect = vec3.create();
+
+    vec3.scaleAndAdd(intersect, rayOrigin, rayDirection, distToIntersect);
+    return [...intersect];
+}
+
+function getMultiplyVec(mat, vec){
+    let ret = new Float32Array(4);
+    ret[0] = mat[0]*vec[0] + mat[4]*vec[1] + mat[8]*vec[2] + mat[12];
+    ret[1] = mat[1]*vec[0] + mat[5]*vec[1] + mat[9]*vec[2] + mat[13];
+    ret[2] = mat[2]*vec[0] + mat[6]*vec[1] + mat[10]*vec[2] + mat[14];
+    ret[3] = mat[3]*vec[0] + mat[7]*vec[1] + mat[11]*vec[2] + mat[15];
+    return ret;
+}

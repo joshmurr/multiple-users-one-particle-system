@@ -408,7 +408,10 @@ export default class GL_BP {
 
     // Can't pass an argument to a regular get ___(){}
     getViewMatrix(_programName){
-        return [...this._programs[_programName].globalUniforms['u_ViewMatrix'].value];
+        return this._programs[_programName].globalUniforms['u_ViewMatrix'].value;
+    }
+    getProjectionMatrix(_programName){
+        return this._programs[_programName].globalUniforms['u_ProjectionMatrix'].value;
     }
 
     bindMainViewport(){
