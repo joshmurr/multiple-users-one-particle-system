@@ -194,11 +194,11 @@ float raySphereIntersect(vec3 r0, vec3 rd, vec3 s0, float sr) {
     return (-b - sqrt((b*b) - 4.0*a*c))/(2.0*a);
 }
 
-vec3 mouseRay(vec2 _mousePos, mat4 _viewMat){
+vec3 intersect(vec2 _mousePos){
     vec4 rayStart = vec4(_mousePos, -1.0, 1.0);
     vec4 rayEnd   = vec4(_mousePos,  0.0, 1.0);
 
-    mat4 M = inverse(u_ProjectionMatrix * _viewMat);
+    mat4 M = inverse(u_ProjectionMatrix * u_ViewMatrix);
     vec4 rayStart_world = M * rayStart;
     rayStart_world /= rayStart_world.w;
     vec4 rayEnd_world = M * rayEnd;
@@ -212,7 +212,8 @@ vec3 mouseRay(vec2 _mousePos, mat4 _viewMat){
     float distToIntersect = raySphereIntersect(rO, rD, vec3(0), 0.5);
     vec3 intersect = rO + rD*distToIntersect;
 
-    return repel(i_Position,intersect);
+    return intersect;
+    // return repel(i_Position,intersect);
 }
 
 
@@ -224,15 +225,15 @@ void main(){
         v_Velocity = vec3(0);
         // v_Velocity = u_UserIntersects.position[0].xyz;
     } else {
-        // if(u_Mouse2.x != 0.0 && u_ViewMatrix2[3][3] == 1.0) {
-            // acc += mouseRay(u_Mouse2, u_ViewMatrix2);
-        // }
         if(u_NumUsers > 0) {
             for(int i=0; i<u_NumUsers; i++){
-                if(u_UserIntersects.position[i].x != 0.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);
+                if(u_UserIntersects.position[i].w == 1.0) acc += repel(u_UserIntersects.position[i].xyz, i_Position);
+                else if(u_UserIntersects.position[i].w == 2.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);
+                else acc = vec3(0);
             }
         }
-        // if(u_Click > 0) acc += mouseRay(u_Mouse, u_ViewMatrix);
+        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position);
+        else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse));
 
         v_Position = rotateY(i_Position) + i_Velocity * u_TimeDelta;
         v_Age = i_Age + u_TimeDelta;
