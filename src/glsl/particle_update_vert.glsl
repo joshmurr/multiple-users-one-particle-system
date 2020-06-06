@@ -18,7 +18,7 @@ uniform mat4 u_ProjectionMatrix;
 // -- OTHER USERS -- //
 uniform int u_NumUsers;
 uniform u_UserIntersectsBuffer {
-    vec4 position[4];
+    vec4 position[8];
 } u_UserIntersects;
 
 

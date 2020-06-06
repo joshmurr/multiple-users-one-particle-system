@@ -81,17 +81,15 @@ window.addEventListener("load", function(){
         value: 0,
     });
 
-    GL.addProgramUniform('update', {
-        name: 'u_Intersect',
-        type: 'uniform3fv',
-        value: new Float32Array([0, 0, 0]),
-    });
-
     GL.addUniformBuffer('update', {
         name : 'u_UserIntersectsBuffer',
         binding: 1,
         drawType: 'DYNAMIC_DRAW',
         data : new Float32Array([
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
             0, 0, 0, 0,
             0, 0, 0, 0,
             0, 0, 0, 0,
@@ -144,8 +142,8 @@ window.addEventListener("load", function(){
                 if(user.intersect === -1 || user.intersect === null) break;
                 else {
                     GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', user.intersect, count);
+                    count+=4;
                 }
-                count+=4;
             }
         }
     });
