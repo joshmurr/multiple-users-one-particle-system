@@ -150,6 +150,10 @@ window.addEventListener("load", function(){
         }
     });
 
+    socket.on('connectToRoom', info => {
+        console.log(info);
+    });
+
     function draw(now) {
         GL.draw(now);
         window.requestAnimationFrame(draw);

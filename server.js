@@ -6,6 +6,7 @@ const port = process.env.PORT || 8989;
 const io = require('socket.io')(server);
 
 let users = {};
+let roomNumber = 1;
 
 app.use('/public', express.static(__dirname + '/dist'));
 
@@ -14,7 +15,18 @@ app.get('/', (req, response) => {
 });
 
 io.on('connection', (socket) => {
+    if(io.nsps['/'].adapter.rooms[`room-${roomNumber}`] &&
+       io.nsps['/'].adapter.rooms[`room-${roomNumber}`].length > 6){
+        roomNumber++;
+    }
+
+    const currentRoom = `room-${roomNumber}`;
+
+    socket.join(currentRoom);
+
     socket.emit('data', users);
+    // io.sockets.in(`room-${roomNumber}`).emit('connectToRoom', `You are in room number ${roomNumber}`);
+    // socket.emit('connectToRoom', `You are in room number ${roomNumber}`);
 
     users[socket.id] = {
         intersect : null,
@@ -22,17 +34,17 @@ io.on('connection', (socket) => {
 
     socket.on('data', (data) => {
         Object.assign(users[socket.id], data);
-        socket.broadcast.emit("data", users);
+        socket.broadcast.to(currentRoom).emit("data", users);
     });
 
     socket.on('mouseMove', (data) => {
         users[socket.id].intersect = data.intersect;
-        socket.broadcast.emit("data", users);
+        socket.broadcast.to(currentRoom).emit("data", users);
     });
 
     socket.on('disconnect', () => {
         delete users[socket.id];
-        socket.broadcast.emit('data', users);
+        socket.broadcast.to(currentRoom).emit('data', users);
     });
 });
 
