@@ -120,8 +120,10 @@ window.addEventListener("load", function(){
             const x = 2.0 * e.clientX/GL.width - 1.0;
             const y = -(2.0 * e.clientY/GL.height - 1.0);
 
+            const intersect = mouseRay([x,y], currentViewMatrix, currentProjMatrix)
+
             socket.emit('mouseMove', { 
-                intersect : mouseRay([x,y], currentViewMatrix, currentProjMatrix)
+                intersect : intersect,
             });
         }
     });
@@ -129,20 +131,20 @@ window.addEventListener("load", function(){
     GL.canvas.addEventListener('mouseup', e => {
         click = false;
         socket.emit('data', { 
-            intersect : [ 0, 0, 0, 0 ],
+            intersect : [ 0, 0, 0 ],
         });
     });
 
     socket.on('data', users => {
         GL.updateProgramUniform('update', 'u_NumUsers', Object.keys(users).length-1);
-        let count = 0;
+        let offset = 0;
         for(const ID in users){
             if(users.hasOwnProperty(ID) && ID !== socket.id){
                 const user = users[ID];
-                if(user.intersect === -1 || user.intersect === null) break;
+                if(user.intersect === -1 || user.intersect === null) continue;
                 else {
-                    GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', user.intersect, count);
-                    count+=4;
+                    GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', user.intersect, offset);
+                    offset+=4;
                 }
             }
         }
