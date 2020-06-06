@@ -8,8 +8,6 @@ const updateFrag = require('./glsl/passthru_frag.glsl');
 const renderVert = require('./glsl/particle_render_vert.glsl');
 const renderFrag = require('./glsl/particle_render_frag.glsl');
 
-let mouse2 = [ 0, 0 ];
-
 window.addEventListener("load", function(){
     const GL = new GL_BP();
     GL.init(512,512);

@@ -349,7 +349,9 @@ export default class GL_BP {
                             // TEXTURE
                             this.gl.uniform1i(uniform_desc.location, uniform_desc.unit);
                             this.gl.activeTexture(this.gl.TEXTURE0 + uniform_desc.unit);
-                            this.gl.bindTexture(this.gl[uniform_desc.dimension], uniform_desc.value);
+                            // The offending line in the GOL example.
+                            // Perhaps not necessary:
+                            // this.gl.bindTexture(this.gl[uniform_desc.dimension], uniform_desc.value);
                             break;
                         }
                     }
