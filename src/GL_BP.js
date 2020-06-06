@@ -769,6 +769,7 @@ export default class GL_BP {
         this._canvas.addEventListener('mousedown', (e) => {
             // https://stackoverflow.com/questions/9500743/js-detect-right-click-without-jquery-inline
             e = e || window.event;
+            e.preventDefault();
             if (!e.which && e.button !== undefined ) {
                 e.which = ( e.button & 1 ? 1 : ( e.button & 2 ? 3 : ( e.button & 4 ? 2 : 0 ) ) );
             }

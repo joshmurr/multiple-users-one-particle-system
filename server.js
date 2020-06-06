@@ -26,10 +26,10 @@ io.on('connection', (socket) => {
 
     socket.emit('data', users);
     // io.sockets.in(`room-${roomNumber}`).emit('connectToRoom', `You are in room number ${roomNumber}`);
-    // socket.emit('connectToRoom', `You are in room number ${roomNumber}`);
+    socket.emit('connectToRoom', `You are in room number ${roomNumber}`);
 
     users[socket.id] = {
-        intersect : null,
+        intersect : [0, 0, 0, 0],
     };
 
     socket.on('data', (data) => {
