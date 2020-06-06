@@ -185,7 +185,6 @@ export default class GL_BP {
         let options = {
             name     : 'u_BufferObject',
             binding  : 0,
-            offset   : 0,
             drawType : 'STATIC_DRAW',
             data     : null,
         }
@@ -195,28 +194,18 @@ export default class GL_BP {
         const index = this.gl.getUniformBlockIndex(shaderProgram, options.name);
         this.gl.uniformBlockBinding(shaderProgram, index, options.binding);
 
-
-        // console.log(this.gl.getUniformBlockIndex(shaderProgram, 'faje'));
         const buffer = this.gl.createBuffer();
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, buffer);
         this.gl.bufferData(this.gl.UNIFORM_BUFFER, options.data, this.gl[options.drawType]);
-                                                   // V BufferBase V
-        // this.gl.bufferSubData(this.gl.UNIFORM_BUFFER, options.offset, options.data);
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, null);
         this.gl.bindBufferBase(this.gl.UNIFORM_BUFFER, options.binding, buffer);
-        // console.log(this.gl.getParameter(this.gl.TRANSFORM_FEEDBACK_ACTIVE));
-        // console.log(this.gl.getParameter(this.gl.UNIFORM_BUFFER_BINDING));
-        // this.gl.bindBufferBase(this.gl.UNIFORM_BUFFER, options.binding, null);
 
-
-        /*
-        console.log(
-            this.gl.getActiveUniformBlockParameter(shaderProgram, index, this.gl.UNIFORM_BLOCK_BINDING),
-            this.gl.getActiveUniformBlockParameter(shaderProgram, index, this.gl.UNIFORM_BLOCK_DATA_SIZE),
-            this.gl.getActiveUniformBlockParameter(shaderProgram, index, this.gl.UNIFORM_BLOCK_ACTIVE_UNIFORMS),
-            this.gl.getActiveUniformBlockParameter(shaderProgram, index, this.gl.UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES),
-        );
-        */
+        // console.log(
+            // this.gl.getActiveUniformBlockParameter(shaderProgram, index, this.gl.UNIFORM_BLOCK_BINDING),
+            // this.gl.getActiveUniformBlockParameter(shaderProgram, index, this.gl.UNIFORM_BLOCK_DATA_SIZE),
+            // this.gl.getActiveUniformBlockParameter(shaderProgram, index, this.gl.UNIFORM_BLOCK_ACTIVE_UNIFORMS),
+            // this.gl.getActiveUniformBlockParameter(shaderProgram, index, this.gl.UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES),
+        // );
 
         program.uniformBuffers[options.name] = {
             buffer  : buffer,
@@ -225,16 +214,15 @@ export default class GL_BP {
         };
     }
 
-    updateUniformBuffer(_program, _uniform, _value){
+    updateUniformBuffer(_program, _uniform, _value, _offset){
         const uniformBuffer = this._programs[_program].uniformBuffers[_uniform];
-        uniformBuffer.value.set(_value, 0);
-        console.log(uniformBuffer);
+        uniformBuffer.value.set(_value, _offset);
+        console.log(uniformBuffer.value);
 
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, uniformBuffer.buffer);
         this.gl.bufferSubData(this.gl.UNIFORM_BUFFER, 0, uniformBuffer.value, 0, null);
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, null);
         this.gl.bindBufferBase(this.gl.UNIFORM_BUFFER, uniformBuffer.binding, uniformBuffer.buffer);
-        // this.gl.bindBufferBase(this.gl.UNIFORM_BUFFER, uniformBuffer.binding, null);
     }
 
 

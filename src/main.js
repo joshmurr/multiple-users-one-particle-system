@@ -90,14 +90,18 @@ window.addEventListener("load", function(){
     });
 
     GL.addUniformBuffer('update', {
-        name : 'u_UserIntersects',
+        name : 'u_UserIntersectsBuffer',
         binding: 1,
-        // drawType: 'DYNAMIC_DRAW',
-        data : new Float32Array([0, 0, 0, 0])
+        drawType: 'DYNAMIC_DRAW',
+        data : new Float32Array([
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+            0, 0, 0, 0,
+        ])
     });
 
-    GL.updateUniformBuffer('update', 'u_UserIntersects', [0, 0, 0, 0]);
-
+    // Set random camera position, all at radius 2.0
     const theta = Math.random()*Math.PI*2;
     const phi   = Math.random()*Math.PI*2;
     const x = 2.0*Math.sin(theta)*Math.cos(phi);
@@ -129,17 +133,21 @@ window.addEventListener("load", function(){
     GL.canvas.addEventListener('mouseup', e => {
         click = false;
         socket.emit('data', { 
-            intersect : [ 0, 0, 0 ],
+            intersect : [ 0, 0, 0, 0 ],
         });
     });
 
     socket.on('data', users => {
         GL.updateProgramUniform('update', 'u_NumUsers', Object.keys(users).length-1);
+        let count = 0;
         for(const ID in users){
             if(users.hasOwnProperty(ID) && ID !== socket.id){
                 const user = users[ID];
-                if(user.intersect === -1 || user.intersect === null) GL.updateProgramUniform('update', 'u_Intersect', new Float32Array([0,0,0])); 
-                else GL.updateProgramUniform('update', 'u_Intersect', new Float32Array(user.intersect));
+                if(user.intersect === -1 || user.intersect === null) break;
+                else {
+                    GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', user.intersect, count);
+                }
+                count+=4;
             }
         }
     });
