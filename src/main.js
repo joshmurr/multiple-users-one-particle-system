@@ -60,7 +60,7 @@ window.addEventListener("load", function(){
 
     GL.setDrawParams('render', {
         clearColor : [0.0, 0.0, 0.0, 1.0],
-        enable     : ['BLEND', 'CULL_FACE', 'DEPTH_TEST'], // if enable is changed, it will override defaults
+        enable     : ['BLEND', 'CULL_FACE', 'DEPTH_TEST', /* 'VERTEX_PROGRAM_POINT_SIZE', 'POINT_SPRITE' */], // if enable is changed, it will override defaults
         blendFunc  : ['SRC_ALPHA', 'ONE_MINUS_SRC_ALPHA'],
         depthFunc  : ['LEQUAL']
     });

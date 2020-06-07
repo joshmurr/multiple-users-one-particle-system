@@ -17,6 +17,7 @@ uniform mat4 u_ProjectionMatrix;
 
 // -- OTHER USERS -- //
 uniform int u_NumUsers;
+// Uniform Buffer Object: 'Interface Block'
 uniform u_UserIntersectsBuffer {
     vec4 position[8];
 } u_UserIntersects;
