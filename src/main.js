@@ -1,7 +1,9 @@
 import GL_BP from './GL_BP';
 import { mat4, vec4, vec3 } from 'gl-matrix';
-import socketIOClient from 'socket.io-client';
-let socket = socketIOClient('ws://localhost:8989');
+import io from 'socket.io-client';
+
+let socket = io('ws://localhost:8989');
+if(process.env.NODE_ENV === 'production') socket = io();
 
 const updateVert = require('./glsl/particle_update_vert.glsl');
 const updateFrag = require('./glsl/passthru_frag.glsl');
