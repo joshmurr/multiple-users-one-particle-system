@@ -8,7 +8,7 @@ const io = require('socket.io')(server);
 let users = {};
 let roomNumber = 1;
 
-app.use('/public', express.static(__dirname + '/dist'));
+app.use(express.static(__dirname + '/dist'));
 
 app.get('/', (req, response) => {
     response.sendFile(__dirname + '/index.html');
