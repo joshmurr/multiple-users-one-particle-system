@@ -218,6 +218,7 @@ export default class GL_BP {
         const uniformBuffer = this._programs[_program].uniformBuffers[_uniform];
         uniformBuffer.value.set(_value, _offset);
 
+
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, uniformBuffer.buffer);
         this.gl.bufferSubData(this.gl.UNIFORM_BUFFER, 0, uniformBuffer.value, 0, null);
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, null);
