@@ -39,6 +39,7 @@ io.on('connection', (socket) => {
 
     socket.on('mouseMove', (data) => {
         users[socket.id].intersect = data.intersect;
+        // console.log(Object.values(users));
         socket.broadcast.to(currentRoom).emit("data", users);
     });
 

@@ -230,7 +230,6 @@ void main(){
             for(int i=0; i<u_NumUsers; i++){
                 if(u_UserIntersects.position[i].w == 1.0) acc += repel(u_UserIntersects.position[i].xyz, i_Position);
                 else if(u_UserIntersects.position[i].w == 2.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);
-                else acc = vec3(0);
             }
         }
         if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position);

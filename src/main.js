@@ -144,8 +144,10 @@ window.addEventListener("load", function(){
         for(const ID in users){
             if(users.hasOwnProperty(ID) && ID !== socket.id){
                 const user = users[ID];
-                if(user.intersect === -1 || user.intersect === null) continue;
-                else {
+                if(user.intersect === -1 || user.intersect === null) {
+                    offset+=4;
+                    continue;
+                } else {
                     GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', user.intersect, offset);
                     offset+=4;
                 }
