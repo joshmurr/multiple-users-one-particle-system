@@ -1,10 +1,6 @@
 import { mat4, vec3 } from 'gl-matrix';
-// import Icosahedron from './geometry/icosahedron.js';
-// import RandomPointSphere from './geometry/randomPointSphere.js';
-// import PointCloud from './geometry/pointCloud.js';
+import { detectBrowser } from './utils.js';
 import ParticleSystem from './geometry/particleSystem.js';
-// import Cube from './geometry/cube.js';
-// import Quad from './geometry/quad.js';
 
 export default class GL_BP {
     constructor(){
@@ -57,6 +53,33 @@ export default class GL_BP {
         if (!this.gl) {
             console.warn("You're browser does not support WebGL 2.0. Soz.");
             return;
+        }
+    }
+
+    initAuto(){
+        this._browser = detectBrowser();
+        this._canvas = document.createElement("canvas");
+        const body = document.getElementsByTagName("body")[0];
+        body.appendChild(this._canvas);
+        this.resizeCanvas(this._canvas);
+        this.gl = this._canvas.getContext('webgl2');
+        this._aspect = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
+        if (!this.gl) {
+            console.warn("You're browser does not support WebGL 2.0. Soz.");
+            return;
+        }
+        window.addEventListener('resize', () => {
+            this.resizeCanvas(this.gl.canvas);
+        }, true);
+    }
+
+    resizeCanvas(_canvas){
+        const displayWidth = _canvas.clientWidth;
+        const displayHeight = _canvas.clientHeight;
+
+        if(_canvas.width !== displayWidth || _canvas.height !== displayHeight){
+            this._WIDTH = _canvas.width = displayWidth;
+            this._HEIGHT = _canvas.height = displayHeight;
         }
     }
 

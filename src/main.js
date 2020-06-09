@@ -1,6 +1,7 @@
 import GL_BP from './GL_BP';
 import { mat4, vec4, vec3 } from 'gl-matrix';
 import io from 'socket.io-client';
+import './sass/styles.scss';
 
 let socket = io('ws://localhost:8989');
 if(process.env.NODE_ENV === 'production') socket = io();
@@ -12,7 +13,7 @@ const renderFrag = require('./glsl/particle_render_frag.glsl');
 
 window.addEventListener("load", function(){
     const GL = new GL_BP();
-    GL.init(512,512);
+    GL.initAuto();
 
     const transformFeedbackVaryings = [
         "v_Position",
@@ -25,7 +26,7 @@ window.addEventListener("load", function(){
     GL.initShaderProgram('render', renderVert, renderFrag, null, 'POINTS');
 
 
-    const SIZE = 32;
+    const SIZE = 80;
     // 1D TEXTURE - Grid Spawning Positions
     let d = [];
     for(let i=0; i<SIZE; ++i){

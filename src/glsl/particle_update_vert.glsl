@@ -25,6 +25,7 @@ uniform u_UserIntersectsBuffer {
 
 vec3 u_Gravity = vec3(0.0, 0.0, 0.0);
 vec3 u_Origin = vec3(0.0, 0.0, 0.0);
+vec3 movingAttractor = vec3(2.0, 0, 0);
 float u_MinTheta = -PI;
 float u_MaxTheta = PI;
 float u_MinSpeed = 0.01;
@@ -235,15 +236,17 @@ void main(){
         if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position);
         else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse));
 
+        acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, 0))*0.1;
+
         v_Position = rotateY(i_Position) + i_Velocity * u_TimeDelta;
         v_Age = i_Age + u_TimeDelta;
         v_Life = i_Life;
         vec3 force = vec3(
-                snoise(v_Position.xyz+u_TotalTime*0.1),
-                snoise(v_Position.yzx+u_TotalTime*0.1),
-                snoise(v_Position.zxy+u_TotalTime*0.1)
+                snoise(v_Position.xyz+u_TotalTime*0.5),
+                snoise(v_Position.yzx+u_TotalTime*0.5),
+                snoise(v_Position.zxy+u_TotalTime*0.5)
                 );
-        v_Velocity = i_Velocity + acc + u_Gravity + force*0.05 * u_TimeDelta;
+        v_Velocity = i_Velocity + acc + u_Gravity + force*0.1 * u_TimeDelta;
         acc *= 0.0;
     }
 }

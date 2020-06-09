@@ -16,7 +16,7 @@ app.get('/', (req, response) => {
 
 io.on('connection', (socket) => {
     if(io.nsps['/'].adapter.rooms[`room-${roomNumber}`] &&
-       io.nsps['/'].adapter.rooms[`room-${roomNumber}`].length > 6){
+       io.nsps['/'].adapter.rooms[`room-${roomNumber}`].length > 5){
         roomNumber++;
     }
 
