@@ -15,6 +15,8 @@ uniform mat4 u_ModelMatrix;
 uniform mat4 u_ViewMatrix;
 uniform mat4 u_ProjectionMatrix;
 
+uniform int u_NumParticlesSqRoot;
+
 // -- OTHER USERS -- //
 uniform int u_NumUsers;
 // Uniform Buffer Object: 'Interface Block'
@@ -220,7 +222,7 @@ vec3 intersect(vec2 _mousePos){
 
 void main(){
     if(i_Age >= i_Life) {
-        v_Position = 1.0 * (2.0 * texelFetch(u_InitialPosition, ivec2(gl_VertexID, 0), 0).rgb - vec3(1.0));
+        v_Position = 1.0 * (2.0 * texelFetch(u_InitialPosition, ivec2(gl_VertexID%u_NumParticlesSqRoot, gl_VertexID/u_NumParticlesSqRoot), 0).rgb - vec3(1.0));
         v_Age = 0.0;
         v_Life = i_Life;
         v_Velocity = vec3(0);
@@ -245,7 +247,7 @@ void main(){
                 snoise(v_Position.yzx+u_TotalTime*0.5),
                 snoise(v_Position.zxy+u_TotalTime*0.5)
                 );
-        v_Velocity = i_Velocity + acc + u_Gravity + force*0.1 * u_TimeDelta;
+        v_Velocity = i_Velocity + acc + u_Gravity + force*0.4 * u_TimeDelta;
         acc *= 0.0;
     }
 }

@@ -74,8 +74,10 @@ export default class GL_BP {
     }
 
     resizeCanvas(_canvas){
-        const displayWidth = _canvas.clientWidth;
-        const displayHeight = _canvas.clientHeight;
+        var cssToRealPixels = window.devicePixelRatio || 1;
+
+        const displayWidth  = Math.floor(_canvas.clientWidth * cssToRealPixels);
+        const displayHeight = Math.floor(_canvas.clientHeight * cssToRealPixels);
 
         if(_canvas.width !== displayWidth || _canvas.height !== displayHeight){
             this._WIDTH = _canvas.width = displayWidth;

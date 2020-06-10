@@ -26,8 +26,8 @@ window.addEventListener("load", function(){
     GL.initShaderProgram('render', renderVert, renderFrag, null, 'POINTS');
 
 
-    const SIZE = 80;
-    // 1D TEXTURE - Grid Spawning Positions
+    const SIZE = 192;
+    // 2D TEXTURE - Grid Spawning Positions
     let d = [];
     for(let i=0; i<SIZE; ++i){
         let u = (i/SIZE) * (Math.PI);
@@ -50,8 +50,8 @@ window.addEventListener("load", function(){
     }
     GL.dataTexture('update', {
         name           :'u_InitialPosition',
-        width          : SIZE*SIZE,
-        height         : 1,
+        width          : SIZE,
+        height         : SIZE,
         internalFormat : 'RGB8',
         format         : 'RGB',
         unit           : 0,
@@ -73,7 +73,7 @@ window.addEventListener("load", function(){
         numParticles : SIZE*SIZE,
         lifeRange    : [1.01, 10.1],
         dimensions : 3,
-        birthRate : 0.99
+        birthRate : 2
     };
     const ParticleSystem = GL.ParticleSystem('update', 'render', opts);
     GL.initGeometryUniforms('update', [ 'u_ModelMatrix' ]);
@@ -82,6 +82,12 @@ window.addEventListener("load", function(){
         name: 'u_NumUsers',
         type: 'uniform1i',
         value: 0,
+    });
+
+    GL.addProgramUniform('update', {
+        name: 'u_NumParticlesSqRoot',
+        type: 'uniform1i',
+        value: SIZE,
     });
 
     GL.addUniformBuffer('update', {

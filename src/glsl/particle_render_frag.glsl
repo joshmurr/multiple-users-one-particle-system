@@ -27,8 +27,8 @@ void main() {
     float colorAmount = smoothstep(0.8, 1.0, dist);
     vec4 colorOut = mix(particleColor, vec4(0), colorAmount);
 
-    float u_fogNear = 0.92;
-    float u_fogFar = 0.98;
+    float u_fogNear = 0.93;
+    float u_fogFar = 0.97;
     vec4 u_fogColor = vec4(0.1, 0.1, 1.0, 1.0);
 
     float fogAmount = smoothstep(u_fogNear, u_fogFar, gl_FragCoord.z);
