@@ -215,7 +215,6 @@ vec3 intersect(vec2 _mousePos){
     vec3 intersect = rO + rD*distToIntersect;
 
     return intersect;
-    // return repel(i_Position,intersect);
 }
 
 
@@ -233,10 +232,10 @@ void main(){
                 else if(u_UserIntersects.position[i].w == 2.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);
             }
         }
-        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position);
+        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position)*0.8;
         else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse));
 
-        acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, 0))*0.1;
+        acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, sin(3.0*PI+u_TotalTime)*0.3))*0.1;
 
         v_Position = rotateY(i_Position) + i_Velocity * u_TimeDelta;
         v_Age = i_Age + u_TimeDelta;

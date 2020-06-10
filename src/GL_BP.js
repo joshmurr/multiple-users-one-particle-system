@@ -80,6 +80,8 @@ export default class GL_BP {
         if(_canvas.width !== displayWidth || _canvas.height !== displayHeight){
             this._WIDTH = _canvas.width = displayWidth;
             this._HEIGHT = _canvas.height = displayHeight;
+            this._aspect = this._WIDTH / this._HEIGHT;
+            // this.updateProjectionMatrix();
         }
     }
 

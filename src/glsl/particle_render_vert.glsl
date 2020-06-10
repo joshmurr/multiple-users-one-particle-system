@@ -19,5 +19,5 @@ void main(){
     float ageFactor = 1.0 - i_Age/i_Life;
 
     gl_Position = u_ProjectionMatrix * u_ViewMatrix * vec4(i_Position, 1.0);
-    gl_PointSize = 1.0/gl_Position.z * 6.0 * ageFactor;
+    gl_PointSize = 1.0/gl_Position.z * 8.0 * ageFactor;
 }
