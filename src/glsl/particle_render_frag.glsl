@@ -3,15 +3,18 @@ precision mediump float;
 
 in float v_Age;
 in float v_Life;
+in vec3 v_Velocity;
 
 out vec4 o_FragColor;
 
 vec3 palette(in float t, in vec3 a, in vec3 b, in vec3 c, in vec3 d){
+    // https://iquilezles.org/www/articles/palettes/palettes.htm
     return a+b*cos(6.28318*(c*t+d));
 }
 
 void main() {
     float t = v_Age/v_Life;
+    float speed = length(v_Velocity);
     float dist= length(2.0 * gl_PointCoord - 1.0);
     if (dist> 1.0) {
         discard;
@@ -25,7 +28,8 @@ void main() {
             );
 
     float colorAmount = smoothstep(0.8, 1.0, dist);
-    vec4 colorOut = mix(particleColor, vec4(0), colorAmount);
+    vec4 speedColor = vec4(speed, 1, 1, 1.0);
+    vec4 colorOut = mix(particleColor, vec4(0), colorAmount) * speedColor;
 
     float u_fogNear = 0.93;
     float u_fogFar = 0.97;

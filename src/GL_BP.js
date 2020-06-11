@@ -62,7 +62,7 @@ export default class GL_BP {
         const body = document.getElementsByTagName("body")[0];
         body.appendChild(this._canvas);
         this.resizeCanvas(this._canvas);
-        this.gl = this._canvas.getContext('webgl2');
+        this.gl = this._canvas.getContext('webgl2',{premultipliedAlpha: false});
         this._aspect = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
         if (!this.gl) {
             console.warn("You're browser does not support WebGL 2.0. Soz.");
@@ -573,6 +573,13 @@ export default class GL_BP {
                             for(const val of values) this.gl[param](this.gl[val]);
                         } else if(param === 'blendFunc'){
                             this.gl[param](this.gl[values[0]], this.gl[values[1]]);
+                        } else if(param === 'blendFuncSeparate'){
+                            this.gl[param](
+                                this.gl[values[0]],
+                                this.gl[values[1]],
+                                this.gl[values[2]],
+                                this.gl[values[3]],
+                        );
                         } else if(param === 'depthFunc'){
                             this.gl[param](this.gl[values[0]]);
                         } else if(param === 'clear'){

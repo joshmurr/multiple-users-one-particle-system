@@ -234,7 +234,7 @@ void main(){
                 else if(u_UserIntersects.position[i].w == 2.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);
             }
         }
-        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position)*0.8;
+        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position);
         else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse));
 
         acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, sin(3.0*PI+u_TotalTime)*0.3))*0.1;

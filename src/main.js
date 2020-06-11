@@ -26,7 +26,7 @@ window.addEventListener("load", function(){
     GL.initShaderProgram('render', renderVert, renderFrag, null, 'POINTS');
 
 
-    const SIZE = 192;
+    const SIZE = 96;
     // 2D TEXTURE - Grid Spawning Positions
     let d = [];
     for(let i=0; i<SIZE; ++i){
@@ -63,9 +63,8 @@ window.addEventListener("load", function(){
 
     GL.setDrawParams('render', {
         clearColor : [0.0, 0.0, 0.0, 1.0],
-        enable     : ['BLEND', 'CULL_FACE', 'DEPTH_TEST'],
+        enable     : ['BLEND'],
         blendFunc  : ['SRC_ALPHA', 'ONE_MINUS_SRC_ALPHA'],
-        depthFunc  : ['LEQUAL']
     });
 
 
