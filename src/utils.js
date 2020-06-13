@@ -6,6 +6,6 @@ export function detectBrowser(){
     else if(/*@cc_on!@*/false || !!document.documentMode) return 'ie';
     else if(/* !isIE &&  */!!window.StyleMedia) return 'edge';
     else if(!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)) return 'chrome';
-    else if(isChrome && (navigator.userAgent.indexOf("Edg") != -1)) return 'edgeChromium';
-    else if((isChrome || isOpera) && !!window.CSS) return 'blink';
+    else if(navigator.userAgent.indexOf("Edg") != -1) return 'edgeChromium';
+    else if(!!window.CSS) return 'blink';
 }
