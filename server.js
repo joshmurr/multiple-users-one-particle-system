@@ -25,7 +25,6 @@ io.on('connection', (socket) => {
     socket.join(currentRoom);
 
     socket.emit('data', users);
-    // io.sockets.in(`room-${roomNumber}`).emit('connectToRoom', `You are in room number ${roomNumber}`);
     socket.emit('connectToRoom', roomNumber);
 
     users[socket.id] = {
@@ -39,7 +38,6 @@ io.on('connection', (socket) => {
 
     socket.on('mouseMove', (data) => {
         users[socket.id].intersect = data.intersect;
-        // console.log(Object.values(users));
         socket.broadcast.to(currentRoom).emit("data", users);
     });
 

@@ -3,8 +3,9 @@ import io from 'socket.io-client';
 import { mouseRay, getMultiplyVec, initGui, updateNumUsers, updateRoomNumber  } from './ui.js';
 import './sass/styles.scss';
 
-let socket = io('ws://localhost:8989');
+let socket = null;
 if(process.env.NODE_ENV === 'production') socket = io();
+else socket = io('ws://localhost:8989', {transports: ['websocket']});
 
 const updateVert = require('./glsl/particle_update_vert.glsl');
 const updateFrag = require('./glsl/passthru_frag.glsl');
@@ -212,6 +213,13 @@ window.addEventListener("load", function(){
     GL.updateUniformBuffer('update', 'u_UserSettings', new Float32Array([turbulenceSlider.value]), 0);
     GL.updateUniformBuffer('update', 'u_UserSettings', new Float32Array([attractSlider.value]), 1);
     GL.updateUniformBuffer('update', 'u_UserSettings', new Float32Array([repelSlider.value]), 2);
+
+    if(!['chrome', 'edgeChromium', 'firefox'].includes(GL.browser)){
+        const warning = document.getElementById('warning');
+        warning.style.display = "block";
+        const overlay = document.getElementById('overlay');
+        overlay.classList.toggle('invisible', false);
+    }
 
     function draw(now) {
         GL.draw(now);

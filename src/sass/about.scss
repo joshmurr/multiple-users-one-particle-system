@@ -10,6 +10,7 @@
     transition: 0.5s;
 
     #about {
+        display: block;
         width: 500px;
         background-color: $about-color;
         border-radius: 10px;
@@ -39,10 +40,23 @@
             }
         }
 
+        #warning {
+            background-color: red;
+            border-radius: 8px;
+            padding: 10px;
+            font-style: initial;
+            margin-bottom: 0.8em;
+            display: none;
+        }
+
     }
 }
 
 .invisible {
     visibility: hidden;
     opacity: 0;
+}
+
+.display {
+    display: block;
 }
