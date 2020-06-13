@@ -2667,8 +2667,9 @@ module.exports = function(a, b){
 // Imports
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(false);
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap);"]);
 // Module
-exports.push([module.i, "html {\n  box-sizing: border-box;\n}\n\n*, *:before, *:after {\n  box-sizing: inherit;\n  padding: 0;\n  margin: 0;\n}\n\nbody {\n  margin: 0;\n  color: red;\n}\n\ncanvas {\n  width: 100vw;\n  height: 100vh;\n  display: block;\n}", ""]);
+exports.push([module.i, "nav {\n  width: 0;\n  position: fixed;\n  z-index: 1;\n  top: 20px;\n  left: 0;\n  background-color: rgba(89, 255, 205, 0.3);\n  overflow-x: hidden;\n  padding: 0;\n  transition: ease 0.5s;\n  transition-timing-function: ease;\n  border-radius: 0 0 10px 0;\n  font-family: \"Roboto\", sans-serif;\n}\nnav ul {\n  list-style-type: none;\n  margin: 0;\n  padding: 0.3em;\n  font-style: italic;\n}\nnav ul li {\n  padding: 0.2em;\n}\nnav ul li a {\n  text-decoration: none;\n  color: black;\n  display: block;\n  transition: 0.2s;\n}\nnav ul li a:hover {\n  color: rgba(128, 205, 255, 0.9);\n}\n\n#menuToggle {\n  position: absolute;\n  display: grid;\n  justify-content: center;\n  align-content: center;\n  top: 20px;\n  left: 0px;\n  width: 30px;\n  height: 30px;\n  background-color: rgba(89, 255, 205, 0.3);\n  border-radius: 0 10px 10px 0;\n  transition: ease 0.5s;\n  transition-timing-function: ease;\n}\n#menuToggle #arrow {\n  transition: transform 1s, color 0.2s;\n}\n\n#menuToggle:hover {\n  color: rgba(128, 205, 255, 0.9);\n}\n\n.title {\n  font-style: normal;\n}\n\n.show {\n  width: 250px;\n}\n\n.slide {\n  margin-left: 250px;\n}\n\n.rotate {\n  transform: rotate(180deg);\n}\n\nhtml {\n  box-sizing: border-box;\n}\n\n*, *:before, *:after {\n  box-sizing: inherit;\n  padding: 0;\n  margin: 0;\n}\n\nbody {\n  margin: 0;\n  cursor: crosshair;\n}\n\ncanvas {\n  width: 100vw;\n  height: 100vh;\n  display: block;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -19368,8 +19369,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gl-matrix */ "./node_modules/gl-matrix/esm/index.js");
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sass/styles.scss */ "./src/sass/styles.scss");
-/* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_sass_styles_scss__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _ui_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui.js */ "./src/ui.js");
+/* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sass/styles.scss */ "./src/sass/styles.scss");
+/* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_sass_styles_scss__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -19398,7 +19401,7 @@ window.addEventListener("load", function(){
     GL.initShaderProgram('render', renderVert, renderFrag, null, 'POINTS');
 
 
-    const SIZE = 96;
+    const SIZE = 128;
     // 2D TEXTURE - Grid Spawning Positions
     let d = [];
     for(let i=0; i<SIZE; ++i){
@@ -19537,6 +19540,8 @@ window.addEventListener("load", function(){
         console.log(info);
     });
 
+    Object(_ui_js__WEBPACK_IMPORTED_MODULE_3__["initUi"])();
+
     function draw(now) {
         GL.draw(now);
         window.requestAnimationFrame(draw);
@@ -19628,6 +19633,32 @@ var update = api(content, options);
 
 
 module.exports = content.locals || {};
+
+/***/ }),
+
+/***/ "./src/ui.js":
+/*!*******************!*\
+  !*** ./src/ui.js ***!
+  \*******************/
+/*! exports provided: initUi */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initUi", function() { return initUi; });
+function initUi(){
+    const menuToggle = document.getElementById('menuToggle');
+    const menu = document.getElementsByTagName('nav')[0];
+    const arrow = document.getElementById('arrow');
+
+    menuToggle.addEventListener('click', () => {
+        menu.classList.toggle('show');
+        menuToggle.classList.toggle('slide');
+        arrow.classList.toggle('rotate');
+    });
+}
+
+
 
 /***/ }),
 

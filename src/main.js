@@ -1,6 +1,7 @@
 import GL_BP from './GL_BP';
 import { mat4, vec4, vec3 } from 'gl-matrix';
 import io from 'socket.io-client';
+import { initUi } from './ui.js';
 import './sass/styles.scss';
 
 let socket = io('ws://localhost:8989');
@@ -26,7 +27,7 @@ window.addEventListener("load", function(){
     GL.initShaderProgram('render', renderVert, renderFrag, null, 'POINTS');
 
 
-    const SIZE = 96;
+    const SIZE = 128;
     // 2D TEXTURE - Grid Spawning Positions
     let d = [];
     for(let i=0; i<SIZE; ++i){
@@ -164,6 +165,8 @@ window.addEventListener("load", function(){
     socket.on('connectToRoom', info => {
         console.log(info);
     });
+
+    initUi();
 
     function draw(now) {
         GL.draw(now);
