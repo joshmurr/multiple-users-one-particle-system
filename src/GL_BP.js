@@ -57,7 +57,7 @@ export default class GL_BP {
     }
 
     initAuto(){
-        this._browser = detectBrowser();
+        // this._browser = detectBrowser();
         this._canvas = document.createElement("canvas");
         const body = document.getElementsByTagName("body")[0];
         body.appendChild(this._canvas);
