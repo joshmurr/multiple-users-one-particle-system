@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap');
 
-$nav-color: rgb(89,255,205);
-$nav-alpha: 0.3;
-$about-alpha: 0.8;
+$nav-color: rgb(89,255,205, 0.3);
+$about-color: rgb(89,255,205, 0.9);
 $arrow-color: rgba(128,205, 255, 0.9);
+$slider-color: rgb(206, 115, 255);
+$slider-thumb-color: rgb(255, 227, 115);
+
+$menu-width: 240px;
+
 
 @import 'nav';
 @import 'about';

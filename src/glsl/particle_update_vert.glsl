@@ -229,12 +229,12 @@ void main(){
     } else {
         if(u_NumUsers > 0) {
             for(int i=0; i<u_NumUsers; i++){
-                if(u_UserIntersects.position[i].w == 1.0) acc += repel(u_UserIntersects.position[i].xyz, i_Position);
-                else if(u_UserIntersects.position[i].w == 2.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);
+                if(u_UserIntersects.position[i].w == 1.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz); 
+                else if(u_UserIntersects.position[i].w == 2.0) acc += repel(u_UserIntersects.position[i].xyz, i_Position);
             }
         }
-        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position)*u_Settings.repel;
-        else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse))*u_Settings.attract;
+        if(u_Click == 1) acc += repel(i_Position, intersect(u_Mouse))*u_Settings.attract;
+        else if(u_Click == 2) acc += repel(intersect(u_Mouse), i_Position)*u_Settings.repel;
 
         // Lissajous Attractor
         acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, sin(3.0*PI+u_TotalTime)*0.3))*u_Settings.turbulence*0.2;

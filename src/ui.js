@@ -6,6 +6,7 @@ export function initGui(){
     const arrow = document.getElementById('arrow');
     const aboutBtn = document.getElementById('aboutBtn');
     const overlay = document.getElementById('overlay');
+    const about = document.getElementById('about');
 
     menuToggle.addEventListener('click', () => {
         menu.classList.toggle('show');
@@ -18,7 +19,7 @@ export function initGui(){
     });
 
     overlay.addEventListener('click', () => {
-        overlay.classList.toggle('invisible', true);
+        overlay.classList.toggle('invisible');
     });
 
     // Prevents flashing up on window load

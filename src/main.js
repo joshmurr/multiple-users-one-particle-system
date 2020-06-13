@@ -27,7 +27,7 @@ window.addEventListener("load", function(){
 
 
     const SIZE = 128;
-    // 2D TEXTURE - Grid Spawning Positions
+    // 2D TEXTURE - Spawning Positions
     let d = [];
     for(let i=0; i<SIZE; ++i){
         let u = (i/SIZE) * (Math.PI);
@@ -135,7 +135,7 @@ window.addEventListener("load", function(){
     let click = false;
     const currentViewMatrix = GL.getViewMatrix('update');
     const currentProjMatrix = GL.getProjectionMatrix('update');
-    let userCount = 0;
+    let userCount = 1;
     let prevUserCount = 0;
     let roomNumber = 0;
     let turbulence = 0;
@@ -166,7 +166,7 @@ window.addEventListener("load", function(){
     });
 
     socket.on('data', users => {
-        userCount = Object.keys(users).length;
+        userCount = Object.keys(users).length || 1;
         GL.updateProgramUniform('update', 'u_NumUsers', userCount-1);
         updateNumUsers(userCount);
         let offset = 0;
@@ -208,6 +208,10 @@ window.addEventListener("load", function(){
         GL.updateUniformBuffer('update', 'u_UserSettings',
             new Float32Array([repelSlider.value]), 2);
     });
+
+    GL.updateUniformBuffer('update', 'u_UserSettings', new Float32Array([turbulenceSlider.value]), 0);
+    GL.updateUniformBuffer('update', 'u_UserSettings', new Float32Array([attractSlider.value]), 1);
+    GL.updateUniformBuffer('update', 'u_UserSettings', new Float32Array([repelSlider.value]), 2);
 
     function draw(now) {
         GL.draw(now);

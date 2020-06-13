@@ -11,10 +11,13 @@
 
     #about {
         width: 500px;
-        background-color: $nav-color;
-        opacity: $about-alpha;
+        background-color: $about-color;
         border-radius: 10px;
         padding: 10px;
+
+        @media only screen and (max-width: 500px){
+            width: 80vw;
+        }
 
         .title {
             font-style: normal;
@@ -22,6 +25,18 @@
 
         p {
             font-style: italic;
+
+            a {
+                text-decoration: none;
+                background-color: $slider-thumb-color;
+                border-radius: 0.5em;
+                color: black;
+                transition: 0.3s;
+                padding: 0 0.2em 0 0.2em;
+            }
+            a:hover {
+                background-color: $slider-color;
+            }
         }
 
     }
