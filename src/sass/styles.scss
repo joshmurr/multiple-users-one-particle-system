@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap');
+
+$nav-color: rgb(89,255,205);
+$nav-alpha: 0.3;
+$about-alpha: 0.8;
+$arrow-color: rgba(128,205, 255, 0.9);
+
 @import 'nav';
+@import 'about';
 
 html {
     box-sizing: border-box;
@@ -14,6 +21,7 @@ html {
 body{
     margin: 0;
     cursor: crosshair;
+    font-family: Roboto, sans-serif;
 }
 
 canvas {
@@ -21,3 +29,11 @@ canvas {
     height: 100vh;
     display: block;
 }
+
+.flexContainer{
+    height: 100%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+

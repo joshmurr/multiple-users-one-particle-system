@@ -2669,7 +2669,7 @@ var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css
 exports = ___CSS_LOADER_API_IMPORT___(false);
 exports.push([module.i, "@import url(https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap);"]);
 // Module
-exports.push([module.i, "nav {\n  width: 0;\n  position: fixed;\n  z-index: 1;\n  top: 20px;\n  left: 0;\n  background-color: rgba(89, 255, 205, 0.3);\n  overflow-x: hidden;\n  padding: 0;\n  transition: ease 0.5s;\n  transition-timing-function: ease;\n  border-radius: 0 0 10px 0;\n  font-family: \"Roboto\", sans-serif;\n}\nnav ul {\n  list-style-type: none;\n  margin: 0;\n  padding: 0.3em;\n  font-style: italic;\n}\nnav ul li {\n  padding: 0.2em;\n}\nnav ul li a {\n  text-decoration: none;\n  color: black;\n  display: block;\n  transition: 0.2s;\n}\nnav ul li a:hover {\n  color: rgba(128, 205, 255, 0.9);\n}\n\n#menuToggle {\n  position: absolute;\n  display: grid;\n  justify-content: center;\n  align-content: center;\n  top: 20px;\n  left: 0px;\n  width: 30px;\n  height: 30px;\n  background-color: rgba(89, 255, 205, 0.3);\n  border-radius: 0 10px 10px 0;\n  transition: ease 0.5s;\n  transition-timing-function: ease;\n}\n#menuToggle #arrow {\n  transition: transform 1s, color 0.2s;\n}\n\n#menuToggle:hover {\n  color: rgba(128, 205, 255, 0.9);\n}\n\n.title {\n  font-style: normal;\n}\n\n.show {\n  width: 250px;\n}\n\n.slide {\n  margin-left: 250px;\n}\n\n.rotate {\n  transform: rotate(180deg);\n}\n\nhtml {\n  box-sizing: border-box;\n}\n\n*, *:before, *:after {\n  box-sizing: inherit;\n  padding: 0;\n  margin: 0;\n}\n\nbody {\n  margin: 0;\n  cursor: crosshair;\n}\n\ncanvas {\n  width: 100vw;\n  height: 100vh;\n  display: block;\n}", ""]);
+exports.push([module.i, "nav {\n  width: 0;\n  position: fixed;\n  z-index: 1;\n  top: 20px;\n  left: 0;\n  background-color: #59ffcd;\n  opacity: 0.3;\n  overflow-x: hidden;\n  padding: 0;\n  transition: ease 0.5s;\n  transition-timing-function: ease;\n  border-radius: 0 0 10px 0;\n  font-family: \"Roboto\", sans-serif;\n}\nnav ul {\n  list-style-type: none;\n  margin: 0;\n  padding: 0.3em;\n  font-style: italic;\n}\nnav ul li {\n  padding: 0.2em;\n}\nnav ul li a {\n  text-decoration: none;\n  color: black;\n  display: block;\n  transition: 0.2s;\n}\nnav ul li a:hover {\n  color: rgba(128, 205, 255, 0.9);\n}\nnav ul li .slider {\n  -webkit-appearance: none;\n  appearance: none;\n  outline: none;\n  padding: 0;\n  margin: 0;\n  height: 5px;\n  border-radius: 2px;\n  margin-bottom: 2px;\n}\nnav ul li .slider::-webkit-slider-thumb {\n  -webkit-appearance: none;\n  /* Override default look */\n  appearance: none;\n  width: 10px;\n  /* Set a specific slider handle width */\n  height: 10px;\n  /* Slider handle height */\n  background: rgba(128, 205, 255, 0.9);\n  cursor: pointer;\n  /* Cursor on hover */\n}\nnav ul li .slider::-moz-range-thumb {\n  width: 10px;\n  /* Set a specific slider handle width */\n  height: 10px;\n  /* Slider handle height */\n  background: arrow-color;\n  cursor: pointer;\n}\n\n#menuToggle {\n  position: absolute;\n  display: grid;\n  justify-content: center;\n  align-content: center;\n  top: 20px;\n  left: 0px;\n  width: 30px;\n  height: 30px;\n  background-color: #59ffcd;\n  opacity: 0.3;\n  border-radius: 0 10px 10px 0;\n  transition: ease 0.5s;\n  transition-timing-function: ease;\n  font-family: initial;\n}\n#menuToggle #arrow {\n  transition: transform 1s, color 0.2s;\n}\n\n#menuToggle:hover {\n  color: rgba(128, 205, 255, 0.9);\n}\n\n.title {\n  font-style: normal;\n}\n\n.show {\n  width: 250px;\n}\n\n.slide {\n  margin-left: 250px;\n}\n\n.rotate {\n  transform: rotate(180deg);\n}\n\n#overlay {\n  display: none;\n  position: absolute;\n  width: 100vw;\n  height: 100vh;\n  top: 0;\n  left: 0;\n  background-color: rgba(0, 0, 0, 0);\n  z-index: 2;\n  transition: 0.5s;\n}\n#overlay #about {\n  width: 500px;\n  background-color: #59ffcd;\n  opacity: 0.8;\n  border-radius: 10px;\n  padding: 10px;\n}\n#overlay #about .title {\n  font-style: normal;\n}\n#overlay #about p {\n  font-style: italic;\n}\n\n.invisible {\n  visibility: hidden;\n  opacity: 0;\n}\n\nhtml {\n  box-sizing: border-box;\n}\n\n*, *:before, *:after {\n  box-sizing: inherit;\n  padding: 0;\n  margin: 0;\n}\n\nbody {\n  margin: 0;\n  cursor: crosshair;\n  font-family: Roboto, sans-serif;\n}\n\ncanvas {\n  width: 100vw;\n  height: 100vh;\n  display: block;\n}\n\n.flexContainer {\n  height: 100%;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n}", ""]);
 // Exports
 module.exports = exports;
 
@@ -18076,13 +18076,13 @@ class GL_BP {
         this._canvas = document.createElement("canvas");
         const body = document.getElementsByTagName("body")[0];
         body.appendChild(this._canvas);
-        this.resizeCanvas(this._canvas);
         this.gl = this._canvas.getContext('webgl2',{premultipliedAlpha: false});
         this._aspect = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
         if (!this.gl) {
             console.warn("You're browser does not support WebGL 2.0. Soz.");
             return;
         }
+        this.resizeCanvas(this._canvas);
         window.addEventListener('resize', () => {
             this.resizeCanvas(this.gl.canvas);
         }, true);
@@ -18098,7 +18098,6 @@ class GL_BP {
             this._WIDTH = _canvas.width = displayWidth;
             this._HEIGHT = _canvas.height = displayHeight;
             this._aspect = this._WIDTH / this._HEIGHT;
-            // this.updateProjectionMatrix();
         }
     }
 
@@ -18259,8 +18258,6 @@ class GL_BP {
     updateUniformBuffer(_program, _uniform, _value, _offset){
         const uniformBuffer = this._programs[_program].uniformBuffers[_uniform];
         uniformBuffer.value.set(_value, _offset);
-
-
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, uniformBuffer.buffer);
         this.gl.bufferSubData(this.gl.UNIFORM_BUFFER, 0, uniformBuffer.value, 0, null);
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, null);
@@ -18824,7 +18821,11 @@ class GL_BP {
                 e.which = ( e.button & 1 ? 1 : ( e.button & 2 ? 3 : ( e.button & 4 ? 2 : 0 ) ) );
             }
             switch (e.which){
-                case 1: this._click = 1; break; // Left
+                case 1: { // Left
+                    if(this._shiftKeyDown) this._click = 2;
+                    else this._click = 1;
+                    break; 
+                }
                 case 2: this._click = 2; break; // Middle
                 case 3: this._click = 3; break; // Right
             }
@@ -18832,6 +18833,15 @@ class GL_BP {
         });
         this._canvas.addEventListener('mouseup', (e) => {
             this._click = 0; 
+        });
+    }
+
+    initShiftKey(){
+        document.addEventListener('keydown', (e) => {
+            if(e.code === 'ShiftLeft' || e.code === 'ShiftRight') this._shiftKeyDown = true;
+        });
+        document.addEventListener('keyup', (e) => {
+            if(e.code === 'ShiftLeft' || e.code === 'ShiftRight') this._shiftKeyDown = false;
         });
     }
 
@@ -19341,7 +19351,7 @@ module.exports = "#version 300 es\nprecision mediump float;\n\nuniform mat4 u_Pr
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "#version 300 es\n\n#define PI 3.142\n\nprecision mediump float;\nprecision mediump sampler3D;\n\n\nuniform float u_TimeDelta;\nuniform float u_TotalTime;\nuniform vec2 u_Mouse;\nuniform int u_Click;\nuniform sampler2D u_InitialPosition;\nuniform mat4 u_ModelMatrix;\nuniform mat4 u_ViewMatrix;\nuniform mat4 u_ProjectionMatrix;\n\nuniform int u_NumParticlesSqRoot;\n\n// -- OTHER USERS -- //\nuniform int u_NumUsers;\n// Uniform Buffer Object: 'Interface Block'\nuniform u_UserIntersectsBuffer {\n    vec4 position[8];\n} u_UserIntersects;\n\n\nvec3 u_Gravity = vec3(0.0, 0.0, 0.0);\nvec3 u_Origin = vec3(0.0, 0.0, 0.0);\nvec3 movingAttractor = vec3(2.0, 0, 0);\nfloat u_MinTheta = -PI;\nfloat u_MaxTheta = PI;\nfloat u_MinSpeed = 0.01;\nfloat u_MaxSpeed = 0.02;\nvec3 acc = vec3(0.0);\n\nin vec3 i_Position;\nin float i_Age;\nin float i_Life;\nin vec3 i_Velocity;\n\n// Transform Feedback Varyings\nout vec3 v_Position;\nout float v_Age;\nout float v_Life;\nout vec3 v_Velocity;\n\nvec3 mod289(vec3 x) {\n    return x - floor(x * (1.0 / 289.0)) * 289.0;\n}\n\nvec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0;\n}\n\nvec4 taylorInvSqrt(vec4 r) {\n    return 1.79284291400159 - 0.85373472095314 * r;\n}\n\n\nvec4 permute(vec4 x) {\n    return mod289(((x*34.0)+1.0)*x);\n}\n\nfloat snoise(vec3 v) {\n    const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\n    const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\n\n    // First corner\n    vec3 i  = floor(v + dot(v, C.yyy) );\n    vec3 x0 =   v - i + dot(i, C.xxx) ;\n\n    // Other corners\n    vec3 g = step(x0.yzx, x0.xyz);\n    vec3 l = 1.0 - g;\n    vec3 i1 = min( g.xyz, l.zxy );\n    vec3 i2 = max( g.xyz, l.zxy );\n\n    //   x0 = x0 - 0.0 + 0.0 * C.xxx;\n    //   x1 = x0 - i1  + 1.0 * C.xxx;\n    //   x2 = x0 - i2  + 2.0 * C.xxx;\n    //   x3 = x0 - 1.0 + 3.0 * C.xxx;\n    vec3 x1 = x0 - i1 + C.xxx;\n    vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y\n    vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y\n\n    // Permutations\n    i = mod289(i);\n    vec4 p = permute( permute( permute(\n                    i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\n                + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))\n            + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\n\n    // Gradients: 7x7 points over a square, mapped onto an octahedron.\n    // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)\n    float n_ = 0.142857142857; // 1.0/7.0\n    vec3  ns = n_ * D.wyz - D.xzx;\n\n    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)\n\n    vec4 x_ = floor(j * ns.z);\n    vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)\n\n    vec4 x = x_ *ns.x + ns.yyyy;\n    vec4 y = y_ *ns.x + ns.yyyy;\n    vec4 h = 1.0 - abs(x) - abs(y);\n\n    vec4 b0 = vec4( x.xy, y.xy );\n    vec4 b1 = vec4( x.zw, y.zw );\n\n    //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;\n    //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;\n    vec4 s0 = floor(b0)*2.0 + 1.0;\n    vec4 s1 = floor(b1)*2.0 + 1.0;\n    vec4 sh = -step(h, vec4(0.0));\n\n    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\n    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\n\n    vec3 p0 = vec3(a0.xy,h.x);\n    vec3 p1 = vec3(a0.zw,h.y);\n    vec3 p2 = vec3(a1.xy,h.z);\n    vec3 p3 = vec3(a1.zw,h.w);\n\n    //Normalise gradients\n    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\n    p0 *= norm.x;\n    p1 *= norm.y;\n    p2 *= norm.z;\n    p3 *= norm.w;\n\n    // Mix final noise value\n    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\n    m = m * m;\n    return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),\n                dot(p2,x2), dot(p3,x3) ) );\n}\n\n\nfloat random (vec2 st) {\n    return fract(sin(dot(st.xy, vec2(12.9898,78.233)))* 43758.5453123);\n}\n\nvec3 flow(vec3 _p){\n    float x = _p.y * _p.z;\n    float y = _p.x * _p.z;\n    float z = _p.y * _p.x;\n\n    return vec3(x,y,z);\n}\n\nvec3 trigFlow(vec3 _p){\n    return vec3(sin(_p.y*_p.z), cos(sin(_p.x)), sin(_p.z*_p.y));\n}\n\nvec3 piFlow(vec3 _p){\n    return vec3(\n            sin(2.0 * PI * _p.z),\n            sin(2.0 * PI * _p.x),\n            cos(2.0 * PI * _p.y)\n        );\n}\n\nvec3 rotateY(vec3 _p){\n    float t = u_TimeDelta * (PI / 12.0);\n    mat3 rY = mat3(cos(t), 0, -sin(t), 0, 1, 0, sin(t), 0, cos(t));\n    return rY * _p;\n}\n\nvec3 rotateZ(vec3 _p){\n    float t = u_TimeDelta * (PI / 12.0);\n    mat3 rZ = mat3(cos(t), sin(t), 0, -sin(t), cos(t), 0, 0, 0, 1);\n    return rZ * _p;\n}\n\nvec3 repel(vec3 _r, vec3 _pos){\n    vec3 dir = _pos - _r;\n    float d = length(dir);\n    normalize(dir);\n    float force = 1.0/(100.0*d*d);\n    dir *= force;\n    return dir;\n}\n\nfloat raySphereIntersect(vec3 r0, vec3 rd, vec3 s0, float sr) {\n    // - r0: ray origin\n    // - rd: normalized ray direction\n    // - s0: sphere center\n    // - sr: sphere radius\n    // - Returns distance from r0 to first intersecion with sphere,\n    //   or -1.0 if no intersection.\n    float a = dot(rd, rd);\n    vec3 s0_r0 = r0 - s0;\n    float b = 2.0 * dot(rd, s0_r0);\n    float c = dot(s0_r0, s0_r0) - (sr * sr);\n    if (b*b - 4.0*a*c < 0.0) {\n        return -1.0;\n    }\n    return (-b - sqrt((b*b) - 4.0*a*c))/(2.0*a);\n}\n\nvec3 intersect(vec2 _mousePos){\n    vec4 rayStart = vec4(_mousePos, -1.0, 1.0);\n    vec4 rayEnd   = vec4(_mousePos,  0.0, 1.0);\n\n    mat4 M = inverse(u_ProjectionMatrix * u_ViewMatrix);\n    vec4 rayStart_world = M * rayStart;\n    rayStart_world /= rayStart_world.w;\n    vec4 rayEnd_world = M * rayEnd;\n    rayEnd_world  /=rayEnd_world.w;\n\n    vec3 rayDir_world = vec4(rayEnd_world - rayStart_world).xyz;\n    rayDir_world = normalize(rayDir_world);\n\n    vec3 rO = rayStart_world.xyz;\n    vec3 rD = rayDir_world;\n    float distToIntersect = raySphereIntersect(rO, rD, vec3(0), 0.5);\n    vec3 intersect = rO + rD*distToIntersect;\n\n    return intersect;\n}\n\n\nvoid main(){\n    if(i_Age >= i_Life) {\n        v_Position = 1.0 * (2.0 * texelFetch(u_InitialPosition, ivec2(gl_VertexID%u_NumParticlesSqRoot, gl_VertexID/u_NumParticlesSqRoot), 0).rgb - vec3(1.0));\n        v_Age = 0.0;\n        v_Life = i_Life;\n        v_Velocity = vec3(0);\n        // v_Velocity = u_UserIntersects.position[0].xyz;\n    } else {\n        if(u_NumUsers > 0) {\n            for(int i=0; i<u_NumUsers; i++){\n                if(u_UserIntersects.position[i].w == 1.0) acc += repel(u_UserIntersects.position[i].xyz, i_Position);\n                else if(u_UserIntersects.position[i].w == 2.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);\n            }\n        }\n        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position);\n        else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse));\n\n        acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, sin(3.0*PI+u_TotalTime)*0.3))*0.1;\n\n        v_Position = rotateY(i_Position) + i_Velocity * u_TimeDelta;\n        v_Age = i_Age + u_TimeDelta;\n        v_Life = i_Life;\n        vec3 force = vec3(\n                snoise(v_Position.xyz+u_TotalTime*0.5),\n                snoise(v_Position.yzx+u_TotalTime*0.5),\n                snoise(v_Position.zxy+u_TotalTime*0.5)\n                );\n        v_Velocity = i_Velocity + acc + u_Gravity + force*0.4 * u_TimeDelta;\n        acc *= 0.0;\n    }\n}\n"
+module.exports = "#version 300 es\n\n#define PI 3.142\n\nprecision mediump float;\nprecision mediump sampler3D;\n\n\nuniform float u_TimeDelta;\nuniform float u_TotalTime;\nuniform vec2 u_Mouse;\nuniform int u_Click;\nuniform sampler2D u_InitialPosition;\nuniform mat4 u_ModelMatrix;\nuniform mat4 u_ViewMatrix;\nuniform mat4 u_ProjectionMatrix;\n\nuniform int u_NumParticlesSqRoot;\nuniform float u_Turbulence;\n\n// -- OTHER USERS -- //\nuniform int u_NumUsers;\n// Uniform Buffer Object: 'Interface Block'\nuniform u_UserIntersectsBuffer {\n    vec4 position[8];\n} u_UserIntersects;\n\nuniform u_UserSettings {\n    float turbulence;\n    float attract;\n    float repel;\n    float nothing;\n} u_Settings;\n\nvec3 acc = vec3(0.0);\n\nin vec3 i_Position;\nin float i_Age;\nin float i_Life;\nin vec3 i_Velocity;\n\n// Transform Feedback Varyings\nout vec3 v_Position;\nout float v_Age;\nout float v_Life;\nout vec3 v_Velocity;\n\nvec3 mod289(vec3 x) {\n    return x - floor(x * (1.0 / 289.0)) * 289.0;\n}\n\nvec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0;\n}\n\nvec4 taylorInvSqrt(vec4 r) {\n    return 1.79284291400159 - 0.85373472095314 * r;\n}\n\n\nvec4 permute(vec4 x) {\n    return mod289(((x*34.0)+1.0)*x);\n}\n\nfloat snoise(vec3 v) {\n    const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;\n    const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);\n\n    // First corner\n    vec3 i  = floor(v + dot(v, C.yyy) );\n    vec3 x0 =   v - i + dot(i, C.xxx) ;\n\n    // Other corners\n    vec3 g = step(x0.yzx, x0.xyz);\n    vec3 l = 1.0 - g;\n    vec3 i1 = min( g.xyz, l.zxy );\n    vec3 i2 = max( g.xyz, l.zxy );\n\n    //   x0 = x0 - 0.0 + 0.0 * C.xxx;\n    //   x1 = x0 - i1  + 1.0 * C.xxx;\n    //   x2 = x0 - i2  + 2.0 * C.xxx;\n    //   x3 = x0 - 1.0 + 3.0 * C.xxx;\n    vec3 x1 = x0 - i1 + C.xxx;\n    vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y\n    vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y\n\n    // Permutations\n    i = mod289(i);\n    vec4 p = permute( permute( permute(\n                    i.z + vec4(0.0, i1.z, i2.z, 1.0 ))\n                + i.y + vec4(0.0, i1.y, i2.y, 1.0 ))\n            + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));\n\n    // Gradients: 7x7 points over a square, mapped onto an octahedron.\n    // The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)\n    float n_ = 0.142857142857; // 1.0/7.0\n    vec3  ns = n_ * D.wyz - D.xzx;\n\n    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)\n\n    vec4 x_ = floor(j * ns.z);\n    vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)\n\n    vec4 x = x_ *ns.x + ns.yyyy;\n    vec4 y = y_ *ns.x + ns.yyyy;\n    vec4 h = 1.0 - abs(x) - abs(y);\n\n    vec4 b0 = vec4( x.xy, y.xy );\n    vec4 b1 = vec4( x.zw, y.zw );\n\n    //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;\n    //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;\n    vec4 s0 = floor(b0)*2.0 + 1.0;\n    vec4 s1 = floor(b1)*2.0 + 1.0;\n    vec4 sh = -step(h, vec4(0.0));\n\n    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;\n    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;\n\n    vec3 p0 = vec3(a0.xy,h.x);\n    vec3 p1 = vec3(a0.zw,h.y);\n    vec3 p2 = vec3(a1.xy,h.z);\n    vec3 p3 = vec3(a1.zw,h.w);\n\n    //Normalise gradients\n    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));\n    p0 *= norm.x;\n    p1 *= norm.y;\n    p2 *= norm.z;\n    p3 *= norm.w;\n\n    // Mix final noise value\n    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);\n    m = m * m;\n    return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1),\n                dot(p2,x2), dot(p3,x3) ) );\n}\n\n\nfloat random (vec2 st) {\n    return fract(sin(dot(st.xy, vec2(12.9898,78.233)))* 43758.5453123);\n}\n\nvec3 flow(vec3 _p){\n    float x = _p.y * _p.z;\n    float y = _p.x * _p.z;\n    float z = _p.y * _p.x;\n\n    return vec3(x,y,z);\n}\n\nvec3 trigFlow(vec3 _p){\n    return vec3(sin(_p.y*_p.z), cos(sin(_p.x)), sin(_p.z*_p.y));\n}\n\nvec3 piFlow(vec3 _p){\n    return vec3(\n            sin(2.0 * PI * _p.z),\n            sin(2.0 * PI * _p.x),\n            cos(2.0 * PI * _p.y)\n        );\n}\n\nvec3 rotateY(vec3 _p){\n    float t = u_TimeDelta * (PI / 12.0);\n    mat3 rY = mat3(cos(t), 0, -sin(t), 0, 1, 0, sin(t), 0, cos(t));\n    return rY * _p;\n}\n\nvec3 rotateZ(vec3 _p){\n    float t = u_TimeDelta * (PI / 12.0);\n    mat3 rZ = mat3(cos(t), sin(t), 0, -sin(t), cos(t), 0, 0, 0, 1);\n    return rZ * _p;\n}\n\nvec3 repel(vec3 _r, vec3 _pos){\n    vec3 dir = _pos - _r;\n    float d = length(dir);\n    normalize(dir);\n    float force = 1.0/(100.0*d*d);\n    dir *= force;\n    return dir;\n}\n\nfloat raySphereIntersect(vec3 r0, vec3 rd, vec3 s0, float sr) {\n    // - r0: ray origin\n    // - rd: normalized ray direction\n    // - s0: sphere center\n    // - sr: sphere radius\n    // - Returns distance from r0 to first intersecion with sphere,\n    //   or -1.0 if no intersection.\n    float a = dot(rd, rd);\n    vec3 s0_r0 = r0 - s0;\n    float b = 2.0 * dot(rd, s0_r0);\n    float c = dot(s0_r0, s0_r0) - (sr * sr);\n    if (b*b - 4.0*a*c < 0.0) {\n        return -1.0;\n    }\n    return (-b - sqrt((b*b) - 4.0*a*c))/(2.0*a);\n}\n\nvec3 intersect(vec2 _mousePos){\n    vec4 rayStart = vec4(_mousePos, -1.0, 1.0);\n    vec4 rayEnd   = vec4(_mousePos,  0.0, 1.0);\n\n    mat4 M = inverse(u_ProjectionMatrix * u_ViewMatrix);\n    vec4 rayStart_world = M * rayStart;\n    rayStart_world /= rayStart_world.w;\n    vec4 rayEnd_world = M * rayEnd;\n    rayEnd_world  /=rayEnd_world.w;\n\n    vec3 rayDir_world = vec4(rayEnd_world - rayStart_world).xyz;\n    rayDir_world = normalize(rayDir_world);\n\n    vec3 rO = rayStart_world.xyz;\n    vec3 rD = rayDir_world;\n    float distToIntersect = raySphereIntersect(rO, rD, vec3(0), 0.5);\n    vec3 intersect = rO + rD*distToIntersect;\n\n    return intersect;\n}\n\n\nvoid main(){\n    if(i_Age >= i_Life) {\n        v_Position = 1.0 * (2.0 * texelFetch(u_InitialPosition, ivec2(gl_VertexID%u_NumParticlesSqRoot, gl_VertexID/u_NumParticlesSqRoot), 0).rgb - vec3(1.0));\n        v_Age = 0.0;\n        v_Life = i_Life;\n        v_Velocity = vec3(0);\n    } else {\n        if(u_NumUsers > 0) {\n            for(int i=0; i<u_NumUsers; i++){\n                if(u_UserIntersects.position[i].w == 1.0) acc += repel(u_UserIntersects.position[i].xyz, i_Position);\n                else if(u_UserIntersects.position[i].w == 2.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);\n            }\n        }\n        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position)*u_Settings.repel;\n        else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse))*u_Settings.attract;\n\n        // Lissajous Attractor\n        acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, sin(3.0*PI+u_TotalTime)*0.3))*u_Settings.turbulence*0.2;\n\n        v_Position = rotateY(i_Position) + i_Velocity * u_TimeDelta;\n        v_Age = i_Age + u_TimeDelta;\n        v_Life = i_Life;\n        vec3 force = vec3(\n                snoise(v_Position.xyz+u_TotalTime*0.5),\n                snoise(v_Position.yzx+u_TotalTime*0.5),\n                snoise(v_Position.zxy+u_TotalTime*0.5)\n                );\n        v_Velocity = i_Velocity + acc + force*u_Settings.turbulence * u_TimeDelta;\n        acc *= 0.0;\n    }\n}\n"
 
 /***/ }),
 
@@ -19366,19 +19376,17 @@ module.exports = "#version 300 es\nprecision mediump float;\n\nout vec4 o_FragCo
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _GL_BP__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GL_BP */ "./src/GL_BP.js");
-/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! gl-matrix */ "./node_modules/gl-matrix/esm/index.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _ui_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ui.js */ "./src/ui.js");
-/* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./sass/styles.scss */ "./src/sass/styles.scss");
-/* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_sass_styles_scss__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _ui_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ui.js */ "./src/ui.js");
+/* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./sass/styles.scss */ "./src/sass/styles.scss");
+/* harmony import */ var _sass_styles_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_sass_styles_scss__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 
 
-
-let socket = socket_io_client__WEBPACK_IMPORTED_MODULE_2___default()('ws://localhost:8989');
+let socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1___default()('ws://localhost:8989');
 if(false) {}
 
 const updateVert = __webpack_require__(/*! ./glsl/particle_update_vert.glsl */ "./src/glsl/particle_update_vert.glsl");
@@ -19464,6 +19472,12 @@ window.addEventListener("load", function(){
         value: SIZE,
     });
 
+    GL.addProgramUniform('update', {
+        name: 'u_Turbulence',
+        type: 'uniform1f',
+        value: 0.5,
+    });
+
     GL.addUniformBuffer('update', {
         name : 'u_UserIntersectsBuffer',
         binding: 1,
@@ -19480,6 +19494,15 @@ window.addEventListener("load", function(){
         ])
     });
 
+    GL.addUniformBuffer('update', {
+        name : 'u_UserSettings',
+        binding: 2,
+        drawType: 'STATIC_DRAW',
+        data : new Float32Array([
+            0, 0, 0, 0
+        ]),
+    });
+
     // Set random camera position, all at radius 2.0
     const theta = Math.random()*Math.PI*2;
     const phi   = Math.random()*Math.PI*2;
@@ -19489,10 +19512,16 @@ window.addEventListener("load", function(){
 
     GL.cameraPosition = [x, y, z];
 
+    GL.initShiftKey();
+
     // -- SOCKETS ------------------- //
     let click = false;
     const currentViewMatrix = GL.getViewMatrix('update');
     const currentProjMatrix = GL.getProjectionMatrix('update');
+    let userCount = 0;
+    let prevUserCount = 0;
+    let roomNumber = 0;
+    let turbulence = 0;
 
     GL.canvas.addEventListener('mousedown', e => {
         click = true;
@@ -19503,7 +19532,7 @@ window.addEventListener("load", function(){
             const x = 2.0 * e.clientX/GL.width - 1.0;
             const y = -(2.0 * e.clientY/GL.height - 1.0);
 
-            let intersect = mouseRay([x,y], currentViewMatrix, currentProjMatrix);
+            let intersect = Object(_ui_js__WEBPACK_IMPORTED_MODULE_2__["mouseRay"])([x,y], currentViewMatrix, currentProjMatrix);
             intersect[3] = GL.click;
 
             socket.emit('mouseMove', { 
@@ -19520,7 +19549,9 @@ window.addEventListener("load", function(){
     });
 
     socket.on('data', users => {
-        GL.updateProgramUniform('update', 'u_NumUsers', Object.keys(users).length-1);
+        userCount = Object.keys(users).length;
+        GL.updateProgramUniform('update', 'u_NumUsers', userCount-1);
+        Object(_ui_js__WEBPACK_IMPORTED_MODULE_2__["updateNumUsers"])(userCount);
         let offset = 0;
         for(const ID in users){
             if(users.hasOwnProperty(ID) && ID !== socket.id){
@@ -19537,10 +19568,29 @@ window.addEventListener("load", function(){
     });
 
     socket.on('connectToRoom', info => {
-        console.log(info);
+        Object(_ui_js__WEBPACK_IMPORTED_MODULE_2__["updateRoomNumber"])(info);
     });
 
-    Object(_ui_js__WEBPACK_IMPORTED_MODULE_3__["initUi"])();
+
+    Object(_ui_js__WEBPACK_IMPORTED_MODULE_2__["initGui"])();
+
+    const turbulenceSlider = document.getElementById('turbulence');
+    turbulenceSlider.addEventListener('mouseup', () => {
+        GL.updateUniformBuffer('update', 'u_UserSettings',
+            new Float32Array([turbulenceSlider.value]), 0);
+    });
+
+    const attractSlider = document.getElementById('attract');
+    attractSlider.addEventListener('mouseup', () => {
+        GL.updateUniformBuffer('update', 'u_UserSettings',
+           new Float32Array([attractSlider.value]), 1);
+    });
+
+    const repelSlider = document.getElementById('repel');
+    repelSlider.addEventListener('mouseup', () => {
+        GL.updateUniformBuffer('update', 'u_UserSettings',
+            new Float32Array([repelSlider.value]), 2);
+    });
 
     function draw(now) {
         GL.draw(now);
@@ -19550,59 +19600,6 @@ window.addEventListener("load", function(){
 });
 
 
-function mouseRay(_mousePos, _viewMat, _projMat){
-    // -- MOUSE CLICK TO RAY PROJECTION: -----------------------
-    const rayStart = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec4"].fromValues(_mousePos[0], _mousePos[1], -1.0, 1.0);
-    const rayEnd   = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec4"].fromValues(_mousePos[0], _mousePos[1],  0.0, 1.0);
-
-    const inverseMat = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat4"].create();
-    gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat4"].mul(inverseMat, _projMat, _viewMat);
-    gl_matrix__WEBPACK_IMPORTED_MODULE_1__["mat4"].invert(inverseMat, inverseMat);
-
-    const rayStart_world = getMultiplyVec(inverseMat, rayStart);
-    gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec4"].scale(rayStart_world, rayStart_world, 1/rayStart_world[3]);
-    const rayEnd_world =  getMultiplyVec(inverseMat, rayEnd);
-    gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec4"].scale(rayEnd_world, rayEnd_world, 1/rayEnd_world[3]);
-
-    const rayDir_world = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec4"].create();
-    gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec4"].subtract(rayDir_world, rayEnd_world, rayStart_world);
-
-    // -- RAY INTERSECTION WITH UNIT SPHERE: -------------------
-    const rayOrigin = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].fromValues(rayStart_world[0], rayStart_world[1], rayStart_world[2]);
-    const rayDirection = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].fromValues(rayDir_world[0], rayDir_world[1], rayDir_world[2]);
-    gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].normalize(rayDirection, rayDirection);
-
-    let a, b, c; // Floats
-    let rayOrigin_sub_sphereOrigin = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].create();
-    const sphereRadius = 0.5;
-
-    a = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].dot(rayDirection, rayDirection);
-    gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].subtract(rayOrigin_sub_sphereOrigin, rayOrigin, gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].fromValues(0,0,0));
-    b = 2.0 * gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].dot(rayDirection, rayOrigin_sub_sphereOrigin);
-    c = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].dot(rayOrigin_sub_sphereOrigin, rayOrigin_sub_sphereOrigin);
-    c -= (sphereRadius * sphereRadius);
-    if (b*b - 4.0*a*c < 0.0) {
-        // return -1.0;
-        return [0, 0, 0, 0];
-    }
-
-    const distToIntersect = (-b - Math.sqrt((b*b) - 4.0*a*c))/(2.0*a);
-    const intersect = gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].create();
-
-    gl_matrix__WEBPACK_IMPORTED_MODULE_1__["vec3"].scaleAndAdd(intersect, rayOrigin, rayDirection, distToIntersect);
-    // Spread to convert from Float32Array to normal array
-    // because socket.io struggles with F32 arrays.
-    return [...intersect];
-}
-
-function getMultiplyVec(mat, vec){
-    let ret = new Float32Array(4);
-    ret[0] = mat[0]*vec[0] + mat[4]*vec[1] + mat[8]*vec[2] + mat[12];
-    ret[1] = mat[1]*vec[0] + mat[5]*vec[1] + mat[9]*vec[2] + mat[13];
-    ret[2] = mat[2]*vec[0] + mat[6]*vec[1] + mat[10]*vec[2] + mat[14];
-    ret[3] = mat[3]*vec[0] + mat[7]*vec[1] + mat[11]*vec[2] + mat[15];
-    return ret;
-}
 
 
 /***/ }),
@@ -19640,22 +19637,106 @@ module.exports = content.locals || {};
 /*!*******************!*\
   !*** ./src/ui.js ***!
   \*******************/
-/*! exports provided: initUi */
+/*! exports provided: initGui, updateNumUsers, updateRoomNumber, mouseRay, getMultiplyVec */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initUi", function() { return initUi; });
-function initUi(){
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "initGui", function() { return initGui; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateNumUsers", function() { return updateNumUsers; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateRoomNumber", function() { return updateRoomNumber; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mouseRay", function() { return mouseRay; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMultiplyVec", function() { return getMultiplyVec; });
+/* harmony import */ var gl_matrix__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! gl-matrix */ "./node_modules/gl-matrix/esm/index.js");
+
+
+function initGui(){
     const menuToggle = document.getElementById('menuToggle');
     const menu = document.getElementsByTagName('nav')[0];
     const arrow = document.getElementById('arrow');
+    const aboutBtn = document.getElementById('aboutBtn');
+    const overlay = document.getElementById('overlay');
 
     menuToggle.addEventListener('click', () => {
         menu.classList.toggle('show');
         menuToggle.classList.toggle('slide');
         arrow.classList.toggle('rotate');
     });
+
+    aboutBtn.addEventListener('click', () => {
+        overlay.classList.toggle('invisible');
+    });
+
+    overlay.addEventListener('click', () => {
+        overlay.classList.toggle('invisible', true);
+    });
+
+    // Prevents flashing up on window load
+    overlay.style.display = "block";
+}
+
+function updateNumUsers(_numUsers){
+    const activeUsers = document.getElementById('activeUsers');
+    activeUsers.innerHTML = _numUsers;
+}
+
+function updateRoomNumber(_num){
+    const roomNumber = document.getElementById('roomNumber');
+    roomNumber.innerHTML = _num;
+}
+
+function mouseRay(_mousePos, _viewMat, _projMat){
+    // -- MOUSE CLICK TO RAY PROJECTION: -----------------------
+    const rayStart = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec4"].fromValues(_mousePos[0], _mousePos[1], -1.0, 1.0);
+    const rayEnd   = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec4"].fromValues(_mousePos[0], _mousePos[1],  0.0, 1.0);
+
+    const inverseMat = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat4"].create();
+    gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat4"].mul(inverseMat, _projMat, _viewMat);
+    gl_matrix__WEBPACK_IMPORTED_MODULE_0__["mat4"].invert(inverseMat, inverseMat);
+
+    const rayStart_world = getMultiplyVec(inverseMat, rayStart);
+    gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec4"].scale(rayStart_world, rayStart_world, 1/rayStart_world[3]);
+    const rayEnd_world =  getMultiplyVec(inverseMat, rayEnd);
+    gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec4"].scale(rayEnd_world, rayEnd_world, 1/rayEnd_world[3]);
+
+    const rayDir_world = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec4"].create();
+    gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec4"].subtract(rayDir_world, rayEnd_world, rayStart_world);
+
+    // -- RAY INTERSECTION WITH UNIT SPHERE: -------------------
+    const rayOrigin = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].fromValues(rayStart_world[0], rayStart_world[1], rayStart_world[2]);
+    const rayDirection = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].fromValues(rayDir_world[0], rayDir_world[1], rayDir_world[2]);
+    gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].normalize(rayDirection, rayDirection);
+
+    let a, b, c; // Floats
+    let rayOrigin_sub_sphereOrigin = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].create();
+    const sphereRadius = 0.5;
+
+    a = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].dot(rayDirection, rayDirection);
+    gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].subtract(rayOrigin_sub_sphereOrigin, rayOrigin, gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].fromValues(0,0,0));
+    b = 2.0 * gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].dot(rayDirection, rayOrigin_sub_sphereOrigin);
+    c = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].dot(rayOrigin_sub_sphereOrigin, rayOrigin_sub_sphereOrigin);
+    c -= (sphereRadius * sphereRadius);
+    if (b*b - 4.0*a*c < 0.0) {
+        // return -1.0;
+        return [0, 0, 0, 0];
+    }
+
+    const distToIntersect = (-b - Math.sqrt((b*b) - 4.0*a*c))/(2.0*a);
+    const intersect = gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].create();
+
+    gl_matrix__WEBPACK_IMPORTED_MODULE_0__["vec3"].scaleAndAdd(intersect, rayOrigin, rayDirection, distToIntersect);
+    // Spread to convert from Float32Array to normal array
+    // because socket.io struggles with F32 arrays.
+    return [...intersect];
+}
+
+function getMultiplyVec(mat, vec){
+    let ret = new Float32Array(4);
+    ret[0] = mat[0]*vec[0] + mat[4]*vec[1] + mat[8]*vec[2] + mat[12];
+    ret[1] = mat[1]*vec[0] + mat[5]*vec[1] + mat[9]*vec[2] + mat[13];
+    ret[2] = mat[2]*vec[0] + mat[6]*vec[1] + mat[10]*vec[2] + mat[14];
+    ret[3] = mat[3]*vec[0] + mat[7]*vec[1] + mat[11]*vec[2] + mat[15];
+    return ret;
 }
 
 

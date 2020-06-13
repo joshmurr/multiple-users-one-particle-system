@@ -16,6 +16,7 @@ uniform mat4 u_ViewMatrix;
 uniform mat4 u_ProjectionMatrix;
 
 uniform int u_NumParticlesSqRoot;
+uniform float u_Turbulence;
 
 // -- OTHER USERS -- //
 uniform int u_NumUsers;
@@ -24,14 +25,13 @@ uniform u_UserIntersectsBuffer {
     vec4 position[8];
 } u_UserIntersects;
 
+uniform u_UserSettings {
+    float turbulence;
+    float attract;
+    float repel;
+    float nothing;
+} u_Settings;
 
-vec3 u_Gravity = vec3(0.0, 0.0, 0.0);
-vec3 u_Origin = vec3(0.0, 0.0, 0.0);
-vec3 movingAttractor = vec3(2.0, 0, 0);
-float u_MinTheta = -PI;
-float u_MaxTheta = PI;
-float u_MinSpeed = 0.01;
-float u_MaxSpeed = 0.02;
 vec3 acc = vec3(0.0);
 
 in vec3 i_Position;
@@ -226,7 +226,6 @@ void main(){
         v_Age = 0.0;
         v_Life = i_Life;
         v_Velocity = vec3(0);
-        // v_Velocity = u_UserIntersects.position[0].xyz;
     } else {
         if(u_NumUsers > 0) {
             for(int i=0; i<u_NumUsers; i++){
@@ -234,10 +233,11 @@ void main(){
                 else if(u_UserIntersects.position[i].w == 2.0) acc += repel(i_Position, u_UserIntersects.position[i].xyz);
             }
         }
-        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position);
-        else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse));
+        if(u_Click == 1) acc += repel(intersect(u_Mouse), i_Position)*u_Settings.repel;
+        else if(u_Click == 2) acc += repel(i_Position, intersect(u_Mouse))*u_Settings.attract;
 
-        acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, sin(3.0*PI+u_TotalTime)*0.3))*0.1;
+        // Lissajous Attractor
+        acc += repel(i_Position, vec3(cos(7.0*PI+u_TotalTime)*0.5, sin(5.0*PI+u_TotalTime)*0.3, sin(3.0*PI+u_TotalTime)*0.3))*u_Settings.turbulence*0.2;
 
         v_Position = rotateY(i_Position) + i_Velocity * u_TimeDelta;
         v_Age = i_Age + u_TimeDelta;
@@ -247,7 +247,7 @@ void main(){
                 snoise(v_Position.yzx+u_TotalTime*0.5),
                 snoise(v_Position.zxy+u_TotalTime*0.5)
                 );
-        v_Velocity = i_Velocity + acc + u_Gravity + force*0.4 * u_TimeDelta;
+        v_Velocity = i_Velocity + acc + force*u_Settings.turbulence * u_TimeDelta;
         acc *= 0.0;
     }
 }

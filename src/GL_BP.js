@@ -61,13 +61,13 @@ export default class GL_BP {
         this._canvas = document.createElement("canvas");
         const body = document.getElementsByTagName("body")[0];
         body.appendChild(this._canvas);
-        this.resizeCanvas(this._canvas);
         this.gl = this._canvas.getContext('webgl2',{premultipliedAlpha: false});
         this._aspect = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
         if (!this.gl) {
             console.warn("You're browser does not support WebGL 2.0. Soz.");
             return;
         }
+        this.resizeCanvas(this._canvas);
         window.addEventListener('resize', () => {
             this.resizeCanvas(this.gl.canvas);
         }, true);
@@ -83,7 +83,6 @@ export default class GL_BP {
             this._WIDTH = _canvas.width = displayWidth;
             this._HEIGHT = _canvas.height = displayHeight;
             this._aspect = this._WIDTH / this._HEIGHT;
-            // this.updateProjectionMatrix();
         }
     }
 
@@ -244,8 +243,6 @@ export default class GL_BP {
     updateUniformBuffer(_program, _uniform, _value, _offset){
         const uniformBuffer = this._programs[_program].uniformBuffers[_uniform];
         uniformBuffer.value.set(_value, _offset);
-
-
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, uniformBuffer.buffer);
         this.gl.bufferSubData(this.gl.UNIFORM_BUFFER, 0, uniformBuffer.value, 0, null);
         this.gl.bindBuffer(this.gl.UNIFORM_BUFFER, null);
@@ -809,7 +806,11 @@ export default class GL_BP {
                 e.which = ( e.button & 1 ? 1 : ( e.button & 2 ? 3 : ( e.button & 4 ? 2 : 0 ) ) );
             }
             switch (e.which){
-                case 1: this._click = 1; break; // Left
+                case 1: { // Left
+                    if(this._shiftKeyDown) this._click = 2;
+                    else this._click = 1;
+                    break; 
+                }
                 case 2: this._click = 2; break; // Middle
                 case 3: this._click = 3; break; // Right
             }
@@ -817,6 +818,15 @@ export default class GL_BP {
         });
         this._canvas.addEventListener('mouseup', (e) => {
             this._click = 0; 
+        });
+    }
+
+    initShiftKey(){
+        document.addEventListener('keydown', (e) => {
+            if(e.code === 'ShiftLeft' || e.code === 'ShiftRight') this._shiftKeyDown = true;
+        });
+        document.addEventListener('keyup', (e) => {
+            if(e.code === 'ShiftLeft' || e.code === 'ShiftRight') this._shiftKeyDown = false;
         });
     }
 

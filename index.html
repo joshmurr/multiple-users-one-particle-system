@@ -12,10 +12,27 @@
         <nav>
             <ul>
                 <li class="title">Traces</li>
-                <li><a href="#" target="_blank">About</a></li>
-                <li><a href="#" target="_blank">Stuff</a></li>
-                <li><a href="#" target="_blank">Somehign</a></li>
+                <li><a id="aboutBtn">About</a></li>
+                <li>Active Users: <span id="activeUsers">0</span></li>
+                <li>Current Room: <span id="roomNumber">0</span></li>
+                <li class="title">Options:</li>
+                <li>Turbulence: <input type="range" min="0" max="1" value="0.5" step="0.05" class="slider" id="turbulence"/></li>
+                <li>Repel: <input type="range" min="0.1" max="4" value="0.5" step="0.05" class="slider" id="repel"/></li>
+                <li>Attract: <input type="range" min="0.1" max="1" value="0.5" step="0.05" class="slider" id="attract"/></li>
             </ul>
         </nav>
+        <div id="overlay" class="invisible">
+            <div class="flexContainer">
+                <div id="about">
+                    <p><span class="title">Traces</span> is an experiment in multiple user interaction, WebGL 2 and <a href="https://socket.io/" target="_blank">Socket.IO</a>.</p>
+                    </br>
+                    <p>Six users at a time can interact with the particle system. As you interact your influence will be seen by other users, and you can see theirs.</p>
+                    </br>
+                    <p><span class="title">Left-Click</span> to repel, <span class="title">Shift-Click</span> or <span class="title">Middle-Click</span> to attract.</p>
+                    </br>
+                    <p>More information about the project and some further WebGL experiments can be seen <a href="https://joshmurr.github.io/cci-vis-env/" target="_blank">here</a>.</p>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
