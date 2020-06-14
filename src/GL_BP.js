@@ -61,16 +61,16 @@ export default class GL_BP {
         this._canvas = document.createElement("canvas");
         const body = document.getElementsByTagName("body")[0];
         body.appendChild(this._canvas);
+        this.resizeCanvas(this._canvas);
         this.gl = this._canvas.getContext('webgl2',{premultipliedAlpha: false});
         this._aspect = this.gl.canvas.clientWidth / this.gl.canvas.clientHeight;
         if (!this.gl) {
             console.warn("You're browser does not support WebGL 2.0. Soz.");
             return;
         }
-        this.resizeCanvas(this._canvas);
-        // window.addEventListener('resize', () => {
+        window.addEventListener('resize', () => {
             this.resizeCanvas(this.gl.canvas);
-        // }, true);
+        }, true);
     }
 
     resizeCanvas(_canvas){
@@ -516,9 +516,6 @@ export default class GL_BP {
         this._oldTimestamp = now;
         this._time += this._deltaTime;
         // --------------------------------------
-
-        this.resizeCanvas(this.gl.canvas); 
-        
 
         for(const program in this._programs){
             if(this._programs.hasOwnProperty(program)){
