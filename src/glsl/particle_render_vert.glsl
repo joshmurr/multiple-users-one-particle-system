@@ -18,8 +18,8 @@ void main(){
     v_Age = i_Age;
     v_Life = i_Life;
     v_Velocity = i_Velocity;
-    float ageFactor = 1.0 - i_Age/i_Life;
+    float ageFactor = 1.0+(1.0 - i_Age/i_Life);
 
     gl_Position = u_ProjectionMatrix * u_ViewMatrix * vec4(i_Position, 1.0);
-    gl_PointSize = 1.0/gl_Position.z * 8.0 * ageFactor;
+    gl_PointSize = 1.0/gl_Position.z * 5.0 * ageFactor;
 }

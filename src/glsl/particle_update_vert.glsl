@@ -11,7 +11,6 @@ uniform float u_TotalTime;
 uniform vec2 u_Mouse;
 uniform int u_Click;
 uniform sampler2D u_InitialPosition;
-uniform mat4 u_ModelMatrix;
 uniform mat4 u_ViewMatrix;
 uniform mat4 u_ProjectionMatrix;
 

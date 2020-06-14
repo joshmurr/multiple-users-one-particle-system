@@ -214,7 +214,7 @@ window.addEventListener("load", function(){
     GL.updateUniformBuffer('update', 'u_UserSettings', new Float32Array([attractSlider.value]), 1);
     GL.updateUniformBuffer('update', 'u_UserSettings', new Float32Array([repelSlider.value]), 2);
 
-    if(!['chrome', 'edgeChromium', 'firefox'].includes(GL.browser)){
+    if(!['chrome', 'edgeChromium', 'firefox', 'opera'].includes(GL.browser)){
         const warning = document.getElementById('warning');
         warning.style.display = "block";
         const overlay = document.getElementById('overlay');

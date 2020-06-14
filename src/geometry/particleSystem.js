@@ -19,8 +19,9 @@ export default class ParticleSystem extends Geometry {
 
         for(let i=0; i<this._options.numParticles; ++i){
             // Position
-            // data.push(0.0, 0.0);
-            for(let i=0; i<this._options.dimensions; ++i) this._verts.push(Math.random());
+            for(let i=0; i<this._options.dimensions; ++i){
+                this._verts.push(0);
+            }
             // Velocity
             for(let i=0; i<this._options.dimensions; ++i) this._verts.push(0);
 
@@ -121,7 +122,25 @@ export default class ParticleSystem extends Geometry {
                 location: this.gl.getAttribLocation(_renderProgram, "i_Position"),
                 num_components: this._options.dimensions,
                 type: this.gl.FLOAT
-            }
+            },
+            i_Velocity: {
+                location: this.gl.getAttribLocation(_renderProgram, "i_Velocity"),
+                num_components: this._options.dimensions,
+                type: this.gl.FLOAT,
+                size: 4,
+            },
+            i_Age: {
+                location: this.gl.getAttribLocation(_renderProgram, "i_Age"),
+                num_components: 1,
+                type: this.gl.FLOAT,
+                size: 4,
+            },
+            i_Life: {
+                location: this.gl.getAttribLocation(_renderProgram, "i_Life"),
+                num_components: 1,
+                type: this.gl.FLOAT,
+                size: 4,
+            },
         };
 
         const VAO_desc = [
@@ -163,26 +182,21 @@ export default class ParticleSystem extends Geometry {
             this.setupVAO(VAO.buffers, VAO.vao);
         }
 
-        // Just link u_Model Matrix with the render program
-        // this.linkUniforms(_renderProgram);
     }
 
     step(_gl, _dT){
-        // console.log(`State -> read:${this._read} write:${this._write}`);
         const num_part = this._bornParticles;
         if (this._bornParticles < this._options.numParticles) {
             this._bornParticles = Math.min(this._options.numParticles,
                 Math.floor(this._bornParticles + this._options.birthRate * _dT));
         }
 
-        // _gl.bindBufferBase(_gl.UNIFORM_BUFFER_BINDING, 0, null);
         _gl.bindVertexArray(this._VAOs[this._read]);
 
         /* Bind the "write" buffer as transform feedback - the varyings of the
          *      update shader will be written here. */
         _gl.bindBufferBase(
             _gl.TRANSFORM_FEEDBACK_BUFFER, 0, this._buffers[this._write]);
-        // console.log(this.gl.getParameter(this.gl.UNIFORM_BUFFER_BINDING));
 
         /* Since we're not actually rendering anything when updating the particle
          *      this, disable rasterization.*/
@@ -195,6 +209,5 @@ export default class ParticleSystem extends Geometry {
         _gl.disable(_gl.RASTERIZER_DISCARD);
         /* Don't forget to unbind the transform feedback buffer! */
         _gl.bindBufferBase(_gl.TRANSFORM_FEEDBACK_BUFFER, 0, null);
-        // _gl.bindBufferBase(_gl.UNIFORM_BUFFER, 1, null);
     }
 }
