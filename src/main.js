@@ -1,6 +1,7 @@
 import GL_BP from './GL_BP';
 import io from 'socket.io-client';
-import { mouseRay, getMultiplyVec, initGui, updateNumUsers, updateRoomNumber  } from './ui.js';
+import { initGui, updateNumUsers, updateRoomNumber  } from './ui.js';
+import { mouseRay, getMultiplyVec } from './utils.js';
 import './sass/styles.scss';
 
 let socket = null;
