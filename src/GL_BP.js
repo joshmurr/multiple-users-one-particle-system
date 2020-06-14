@@ -68,9 +68,9 @@ export default class GL_BP {
             return;
         }
         this.resizeCanvas(this._canvas);
-        window.addEventListener('resize', () => {
+        // window.addEventListener('resize', () => {
             this.resizeCanvas(this.gl.canvas);
-        }, true);
+        // }, true);
     }
 
     resizeCanvas(_canvas){
@@ -122,7 +122,7 @@ export default class GL_BP {
                 clearColor : [0.95, 0.95, 0.95, 1.0],
                 clearDepth : [1.0],
                 clear      : ['COLOR_BUFFER_BIT', 'DEPTH_BUFFER_BIT'],
-                viewport   : [0, 0, this.gl.canvas.width, this.gl.canvas.height],
+                viewport   : null,
                 enable     : ['CULL_FACE', 'DEPTH_TEST'],
             },
             customFramebufferRoutine : false,
@@ -516,6 +516,8 @@ export default class GL_BP {
         this._oldTimestamp = now;
         this._time += this._deltaTime;
         // --------------------------------------
+
+        this.resizeCanvas(this.gl.canvas); 
         
 
         for(const program in this._programs){
@@ -565,28 +567,45 @@ export default class GL_BP {
                 for(const param in program_desc.drawParams){
                     if(program_desc.drawParams.hasOwnProperty(param)){
                         const values = program_desc.drawParams[param];
-                        if(param === 'enable'){
-                            /* ENABLE CAPS */
-                            for(const val of values) this.gl[param](this.gl[val]);
-                        } else if(param === 'blendFunc'){
-                            this.gl[param](this.gl[values[0]], this.gl[values[1]]);
-                        } else if(param === 'blendFuncSeparate'){
-                            this.gl[param](
-                                this.gl[values[0]],
-                                this.gl[values[1]],
-                                this.gl[values[2]],
-                                this.gl[values[3]],
-                        );
-                        } else if(param === 'depthFunc'){
-                            this.gl[param](this.gl[values[0]]);
-                        } else if(param === 'clear'){
-                            if(!values) continue;
-                            /* COLOR_BUFFER_BIT | DEPTH_BUFFER_BIT */
-                            let clear = 0;
-                            for(const val of values) clear |= this.gl[val];
-                            this.gl[param](clear);
-                        } else {
-                            this.gl[param](...values);
+                        switch(param){
+                            case 'enable' : {
+                                /* ENABLE CAPS */
+                                for(const val of values) this.gl[param](this.gl[val]);
+                                break;
+                            } 
+                            case 'blendFunc' : {
+                                this.gl[param](this.gl[values[0]], this.gl[values[1]]);
+                                break;
+                            } 
+                            case 'blendFuncSeparate':{
+                                this.gl[param](
+                                    this.gl[values[0]],
+                                    this.gl[values[1]],
+                                    this.gl[values[2]],
+                                    this.gl[values[3]],
+                                );
+                                break;
+                            } 
+                            case 'depthFunc':{
+                                this.gl[param](this.gl[values[0]]);
+                                break;
+                            } 
+                            case 'clear':{
+                                if(!values) continue;
+                                /* COLOR_BUFFER_BIT | DEPTH_BUFFER_BIT */
+                                let clear = 0;
+                                for(const val of values) clear |= this.gl[val];
+                                this.gl[param](clear);
+                                break;
+                            } 
+                            case 'viewport': {
+                                if(!values) this.gl[param](0,0,this.gl.canvas.width,this.gl.canvas.height);
+                                else this.gl[param](...values);
+                                break;
+                            } 
+                            default : {
+                                this.gl[param](...values);
+                            }
                         }
                     }
                 }

@@ -3,6 +3,7 @@ precision mediump float;
 
 uniform mat4 u_ProjectionMatrix;
 uniform mat4 u_ViewMatrix;
+uniform vec2 u_Resolution;
 // uniform mat4 u_ModelMatrix;
 
 in vec3 i_Position;

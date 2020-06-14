@@ -60,7 +60,7 @@ window.addEventListener("load", function(){
     });
 
     GL.initProgramUniforms('update', [ 'u_ProjectionMatrix', 'u_ViewMatrix', 'u_TimeDelta', 'u_TotalTime', 'u_Mouse', 'u_Click' ]);
-    GL.initProgramUniforms('render', [ 'u_ProjectionMatrix', 'u_ViewMatrix' ]);
+    GL.initProgramUniforms('render', [ 'u_ProjectionMatrix', 'u_ViewMatrix', 'u_Resolution' ]);
 
     GL.setDrawParams('render', {
         clearColor : [0.0, 0.0, 0.0, 1.0],
