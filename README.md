@@ -1,5 +1,7 @@
 # Multiple Users Interacting With One Particle System
 
+![Screenshot](./screenshot.png)
+
 The title says it all really.
 
 The project is an experiment in multiple user interaction and WebGL 2. [__The project is online here__](https://traces-cci.herokuapp.com) and a full project log and some other WebGL experiments can be found [__here__](https://joshmurr.github.io/cci-vis-env/).
