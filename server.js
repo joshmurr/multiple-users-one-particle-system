@@ -19,24 +19,29 @@ app.get('/', (req, response) => {
 io.on('connection', (socket) => {
     let userCount = Object.keys(users).length;
     roomNumber = (userCount - (userCount%roomSize))/roomSize;
-    const currentRoom = `room-${roomNumber}`;
+    // const currentRoom = `room-${roomNumber}`;
 
-    socket.join(currentRoom);
+    socket.join(roomNumber);
 
     users[socket.id] = {
         intersect : [0,0,0,0],
-        room      : currentRoom,
+        room      : roomNumber,
+        userCount : userCount+1,
     }
 
-    io.sockets.in(currentRoom).emit('data', getRoom(socket.id));
+    io.sockets.emit('userCount', userCount);
 
     socket.on('intersect', (data) => {
         Object.assign(users[socket.id], data);
-        socket.broadcast.to(users[socket.id].room).emit("data", getRoom(socket.id));
+        socket.broadcast.to(users[socket.id].room).emit("data", {
+            userCount : Object.keys(users).length,
+            users     : getRoom(socket.id),
+        });
     });
 
     socket.on('disconnect', () => {
         delete users[socket.id];
+        io.sockets.emit('userCount', Object.keys(users).length);
     });
 });
 

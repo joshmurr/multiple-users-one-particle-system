@@ -169,11 +169,11 @@ window.addEventListener("load", function(){
     });
 
     socket.on('data', users => {
-        userCount = users.length;
-        GL.updateProgramUniform('update', 'u_NumUsers', userCount);
-        updateNumUsers(userCount);
+        // userCount = users.length;
+        GL.updateProgramUniform('update', 'u_NumUsers', users.users.length);
+        updateNumUsers(users.userCount);
         let offset = 0;
-        for(const user of users){
+        for(const user of users.users){
             updateRoomNumber(user.room);
             if(user.intersect !== -1 && user.intersect !== null) {
                 GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', user.intersect, offset);
@@ -182,8 +182,8 @@ window.addEventListener("load", function(){
         }
     });
 
-    socket.on('connectToRoom', info => {
-        updateRoomNumber(info);
+    socket.on('userCount', _num => {
+        updateNumUsers(_num);
     });
 
 
