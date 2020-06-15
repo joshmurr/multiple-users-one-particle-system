@@ -154,7 +154,8 @@ window.addEventListener("load", function(){
             let intersect = mouseRay([x,y], currentViewMatrix, currentProjMatrix);
             intersect[3] = GL.click;
 
-            socket.emit('mouseMove', { 
+            // GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', intersect, 0);
+            socket.emit('intersect', { 
                 intersect : intersect,
             });
         }
@@ -162,27 +163,24 @@ window.addEventListener("load", function(){
 
     GL.canvas.addEventListener('mouseup', e => {
         click = false;
-        socket.emit('data', { 
+        // GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', new Float32Array([0,0,0,0]), 0);
+        socket.emit('intersect', { 
             intersect : [ 0, 0, 0, 0 ],
         });
     });
 
     socket.on('data', users => {
-        userCount = Object.keys(users).length || 1;
-        GL.updateProgramUniform('update', 'u_NumUsers', userCount-1);
+        userCount = users.length;
+        GL.updateProgramUniform('update', 'u_NumUsers', userCount);
         updateNumUsers(userCount);
         let offset = 0;
-        for(const ID in users){
-            if(users.hasOwnProperty(ID) && ID !== socket.id){
-                const user = users[ID];
-                if(user.intersect === -1 || user.intersect === null) {
-                    offset+=4;
-                    continue;
-                } else {
-                    GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', user.intersect, offset);
-                    offset+=4;
-                }
+        console.log(users);
+        for(const user of users){
+            updateRoomNumber(user.room);
+            if(user.intersect !== -1 && user.intersect !== null) {
+                GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', user.intersect, offset);
             }
+            offset+=4;
         }
     });
 

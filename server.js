@@ -5,6 +5,7 @@ const port = process.env.PORT || 8989;
 
 const io = require('socket.io')(server);
 
+let userCount = 0;
 let users = {};
 let roomNumber = 1;
 const roomSize = 3;
@@ -16,39 +17,43 @@ app.get('/', (req, response) => {
 });
 
 io.on('connection', (socket) => {
-    if(io.nsps['/'].adapter.rooms[`room-${roomNumber}`] &&
-       io.nsps['/'].adapter.rooms[`room-${roomNumber}`].length >= roomSize){
-        roomNumber++;
-    }
-
+    let userCount = Object.keys(users).length;
+    roomNumber = (userCount - (userCount%roomSize))/roomSize;
     const currentRoom = `room-${roomNumber}`;
 
     socket.join(currentRoom);
 
-    socket.emit('data', users);
-    socket.emit('connectToRoom', roomNumber);
-
     users[socket.id] = {
-        intersect : [0, 0, 0, 0],
-    };
+        intersect : [0,0,0,0],
+        room      : currentRoom,
+    }
 
-    socket.on('data', (data) => {
+    io.sockets.in(currentRoom).emit('data', getRoom(socket.id));
+
+    socket.on('intersect', (data) => {
         Object.assign(users[socket.id], data);
-        socket.broadcast.to(currentRoom).emit("data", users);
-    });
-
-    socket.on('mouseMove', (data) => {
-        users[socket.id].intersect = data.intersect;
-        socket.broadcast.to(currentRoom).emit("data", users);
+        socket.broadcast.to(users[socket.id].room).emit("data", getRoom(socket.id));
     });
 
     socket.on('disconnect', () => {
         delete users[socket.id];
-        socket.broadcast.to(currentRoom).emit('data', users);
     });
 });
 
 server.listen(port, () => {
     console.log('Running server on 127.0.0.1:' + port);
 });
+
+function getRoom(_socketID){
+    let toSend = [];
+    for(const id in users){
+        if(users.hasOwnProperty(id) && id === _socketID){
+            let user = users[id];
+            if(user.room === users[_socketID].room){
+                toSend.push(user);
+            }
+        }
+    }
+    return toSend;
+}
 
