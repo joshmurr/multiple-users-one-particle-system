@@ -152,9 +152,9 @@ window.addEventListener("load", function(){
             const y = -(2.0 * e.clientY/GL.height - 1.0);
 
             let intersect = mouseRay([x,y], currentViewMatrix, currentProjMatrix);
-            intersect[3] = GL.click;
+            if(intersect !== -1) intersect[3] = GL.click;
+            else intersect = [0, 0, 0, 0];
 
-            // GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', intersect, 0);
             socket.emit('intersect', { 
                 intersect : intersect,
             });
@@ -163,7 +163,6 @@ window.addEventListener("load", function(){
 
     GL.canvas.addEventListener('mouseup', e => {
         click = false;
-        // GL.updateUniformBuffer('update', 'u_UserIntersectsBuffer', new Float32Array([0,0,0,0]), 0);
         socket.emit('intersect', { 
             intersect : [ 0, 0, 0, 0 ],
         });
@@ -174,7 +173,6 @@ window.addEventListener("load", function(){
         GL.updateProgramUniform('update', 'u_NumUsers', userCount);
         updateNumUsers(userCount);
         let offset = 0;
-        console.log(users);
         for(const user of users){
             updateRoomNumber(user.room);
             if(user.intersect !== -1 && user.intersect !== null) {

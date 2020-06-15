@@ -44,8 +44,8 @@ export function mouseRay(_mousePos, _viewMat, _projMat){
     c = vec3.dot(rayOrigin_sub_sphereOrigin, rayOrigin_sub_sphereOrigin);
     c -= (sphereRadius * sphereRadius);
     if (b*b - 4.0*a*c < 0.0) {
-        // return -1.0;
-        return [0, 0, 0, 0];
+        return -1.0;
+        // return [0, 0, 0, 0];
     }
 
     const distToIntersect = (-b - Math.sqrt((b*b) - 4.0*a*c))/(2.0*a);
