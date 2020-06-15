@@ -1,3 +1,5 @@
+import { vec4, vec3, mat4 } from 'gl-matrix';
+
 export function detectBrowser(){
     // https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser
     if((!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0) return 'opera';
