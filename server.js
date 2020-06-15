@@ -7,6 +7,7 @@ const io = require('socket.io')(server);
 
 let users = {};
 let roomNumber = 1;
+const roomSize = 3;
 
 app.use(express.static(__dirname + '/dist'));
 
@@ -16,7 +17,7 @@ app.get('/', (req, response) => {
 
 io.on('connection', (socket) => {
     if(io.nsps['/'].adapter.rooms[`room-${roomNumber}`] &&
-       io.nsps['/'].adapter.rooms[`room-${roomNumber}`].length > 5){
+       io.nsps['/'].adapter.rooms[`room-${roomNumber}`].length >= roomSize){
         roomNumber++;
     }
 
