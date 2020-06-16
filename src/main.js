@@ -191,6 +191,10 @@ window.addEventListener("load", function(){
         updateNumUsers(_num);
     });
 
+    socket.on('userLeft', _num => {
+        updateNumUsersInRoom(_num);
+    });
+
 
     initGui();
 

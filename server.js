@@ -56,7 +56,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnect', () => {
-        removeUser(socket.id);
+        removeUser(socket);
         delete users[socket.id];
         io.sockets.emit('userCount', Object.keys(users).length);
     });
@@ -74,7 +74,10 @@ function getRoom(_room){
     return toSend;
 }
 
-function removeUser(_id){
-    const index = rooms[users[_id].room].indexOf(_id);
-    if(index > -1) rooms[users[_id].room].splice(index, 1);
+function removeUser(_socket){
+    const roomNumber = users[_socket.id].room;
+    const room = rooms[roomNumber];
+    const index = room.indexOf(_socket.id);
+    if(index > -1) room.splice(index, 1);
+    _socket.broadcast.to(roomNumber).emit("userLeft", room.length);
 }
