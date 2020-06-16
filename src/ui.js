@@ -33,6 +33,11 @@ export function updateNumUsers(_numUsers){
     activeUsers.innerHTML = _numUsers;
 }
 
+export function updateNumUsersInRoom(_numUsers){
+    const numUsersInRoom = document.getElementById('numUsersInRoom');
+    numUsersInRoom.innerHTML = _numUsers;
+}
+
 export function updateRoomNumber(_num){
     const roomNumber = document.getElementById('roomNumber');
     roomNumber.innerHTML = _num;

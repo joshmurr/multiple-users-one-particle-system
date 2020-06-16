@@ -7,8 +7,8 @@ const io = require('socket.io')(server);
 
 let userCount = 0;
 let users = {};
-let roomNumber = 1;
 const roomSize = 3;
+let rooms = {};
 
 app.use(express.static(__dirname + '/dist'));
 
@@ -17,29 +17,46 @@ app.get('/', (req, response) => {
 });
 
 io.on('connection', (socket) => {
-    let userCount = Object.keys(users).length;
-    roomNumber = (userCount - (userCount%roomSize))/roomSize;
-    // const currentRoom = `room-${roomNumber}`;
-
-    socket.join(roomNumber);
-
+    userCount = Object.keys(users).length;
     users[socket.id] = {
         intersect : [0,0,0,0],
-        room      : roomNumber,
+        room      : null,
         userCount : userCount+1,
     }
 
+    let userAdded = false, roomNumber = 0;
+    while(!userAdded){
+        if(rooms[roomNumber] && rooms[roomNumber].length < roomSize){
+            // If room exists and has space
+            rooms[roomNumber].push(socket.id);
+            userAdded = true;
+        } else if(!rooms[roomNumber]) {
+            // If room does not exist
+            rooms[roomNumber] = [socket.id];
+            userAdded = true;
+        } else {
+            roomNumber++;
+        }
+    }
+    users[socket.id].room = roomNumber;
+    socket.join(roomNumber);
+
     io.sockets.emit('userCount', userCount);
+
+    socket.emit('init', users[socket.id]);
 
     socket.on('intersect', (data) => {
         Object.assign(users[socket.id], data);
-        socket.broadcast.to(users[socket.id].room).emit("data", {
-            userCount : Object.keys(users).length,
-            users     : getRoom(socket.id),
+        const thisUsersRoom = users[socket.id].room;
+        socket.broadcast.to(thisUsersRoom).emit("data", {
+            userCount   : Object.keys(users).length,
+            usersInRoom : rooms[thisUsersRoom].length,
+            users       : getRoom(thisUsersRoom),
         });
     });
 
     socket.on('disconnect', () => {
+        removeUser(socket.id);
         delete users[socket.id];
         io.sockets.emit('userCount', Object.keys(users).length);
     });
@@ -49,16 +66,16 @@ server.listen(port, () => {
     console.log('Running server on 127.0.0.1:' + port);
 });
 
-function getRoom(_socketID){
+function getRoom(_room){
     let toSend = [];
-    for(const id in users){
-        if(users.hasOwnProperty(id) && id === _socketID){
-            let user = users[id];
-            if(user.room === users[_socketID].room){
-                toSend.push(user);
-            }
-        }
+    for(let i=0; i<rooms[_room].length; i++){
+        toSend.push(users[rooms[_room][i]]);
     }
     return toSend;
 }
 
+function removeUser(_id){
+    const index = rooms[users[_id].room].indexOf(_id);
+    if(index > -1) rooms[users[_id].room].splice(index, 1);
+    console.log(rooms);
+}

@@ -1,6 +1,6 @@
 import GL_BP from './GL_BP';
 import io from 'socket.io-client';
-import { initGui, updateNumUsers, updateRoomNumber  } from './ui.js';
+import { initGui, updateNumUsers, updateRoomNumber, updateNumUsersInRoom } from './ui.js';
 import { mouseRay, getMultiplyVec } from './utils.js';
 import './sass/styles.scss';
 
@@ -169,9 +169,9 @@ window.addEventListener("load", function(){
     });
 
     socket.on('data', users => {
-        // userCount = users.length;
         GL.updateProgramUniform('update', 'u_NumUsers', users.users.length);
         updateNumUsers(users.userCount);
+        updateNumUsersInRoom(users.usersInRoom);
         let offset = 0;
         for(const user of users.users){
             updateRoomNumber(user.room);
@@ -180,6 +180,11 @@ window.addEventListener("load", function(){
             }
             offset+=4;
         }
+    });
+
+    socket.on('init', user => {
+        updateNumUsers(user.userCount);
+        updateRoomNumber(user.room);
     });
 
     socket.on('userCount', _num => {
