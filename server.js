@@ -77,5 +77,4 @@ function getRoom(_room){
 function removeUser(_id){
     const index = rooms[users[_id].room].indexOf(_id);
     if(index > -1) rooms[users[_id].room].splice(index, 1);
-    console.log(rooms);
 }
